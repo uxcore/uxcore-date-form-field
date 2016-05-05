@@ -23,7 +23,7 @@ class Demo extends React.Component {
         return (
             <Form>
                 <DateFormField format="yyyy-MM-dd HH:mm:ss" jsxname="date" jsxlabel="日期" jsxto={new Date().setDate(new Date().getDate() + 1)} locale="zh-cn" />
-                <DateFormField jsxtype="cascade" jsxname="casDate" jsxlabel="级联日期" format="yyyy/MM/dd" />
+                <DateFormField jsxtype="cascade" jsxname="casDate" jsxlabel="级联日期" format="yyyy/MM/dd" jsxto="2016-05-15"/>
             </Form>
         );
     }

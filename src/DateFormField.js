@@ -67,8 +67,8 @@ class DateFormField extends FormField {
     renderField() {
         let me = this;
         let {onSelect, style, prefixCls, value, jsxtype, jsxfrom, jsxto, disabledDate, ...others} = me.props;
-        let from = !!jsxfrom ? me.processTime(jsxfrom).getTime() : 0;
-        let to = !!jsxto ? me.processTime(jsxto).getTime() : Infinity;
+        let from = !!jsxfrom ? me.processTime(jsxfrom) : 0;
+        let to = !!jsxto ? me.processTime(jsxto) : Infinity;
         let mode = me.props.jsxmode || me.props.mode;
         if (mode == Constants.MODE.EDIT) {
             if (jsxtype == "single") {
@@ -111,7 +111,8 @@ class DateFormField extends FormField {
                         key="calendar1"
                         onSelect={me.handleCascadeChange.bind(me, 0)}
                         disabledDate={(current, value) => {
-                            return (current.getTime() < from || current.getTime() > to)
+                            let now = me.processTime(current.getTime());
+                            return (now < from || now > to)
                         }}
                         {...others1}/>);
                 arr.push(<span key="split" className="kuma-uxform-split">-</span>)
@@ -122,7 +123,7 @@ class DateFormField extends FormField {
                         disabledDate={(current, value) => {
                             let now = me.processTime(current.getTime());
                             let first = me.state.value ? me.state.value[0] : 0;
-                            first = me.processTime(first).getTime();
+                            first = me.processTime(first);
                             return (now < from || now > to || now < first);
                         }}
                         {...others2}/>);
