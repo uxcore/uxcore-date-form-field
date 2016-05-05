@@ -131,11 +131,17 @@ class DateFormField extends FormField {
             }
         }
         else if (mode == Constants.MODE.VIEW) {
+            let defautFormat = 'YYYY-MM-DD';
+            if (me.props.showTime || me.props.timePicker) {
+                defautFormat = 'YYYY-MM-DD HH:mm:ss';
+            }
             if (jsxtype == "single") {
-                return <span>{me.state.value}</span>
+                return <span>{!!me.state.value ? Formatter.date(me.state.value, (me.props.format || defautFormat)) : ""}</span>
             }
             else {
-                return <span>{!!me.state.value ? me.state.value.join(" - ") : ""}</span>
+                return <span>{!!me.state.value ? me.state.value.map((item) => {
+                    return Formatter.date(item, (me.props.format || defautFormat))
+                }).join(" - ") : ""}</span>
             }
         }
     }
