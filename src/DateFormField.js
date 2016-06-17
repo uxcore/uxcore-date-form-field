@@ -6,13 +6,14 @@
  * All rights reserved.
  */
 
-let FormField = require('uxcore-form-field');
-let Constants = require('uxcore-const');
-let classnames = require('classnames');
-let Calendar = require('uxcore-calendar');
-let assign = require('object-assign');
-let deepcopy = require('deepcopy');
-let Formatter = require('uxcore-formatter');
+const React = require('react');
+const FormField = require('uxcore-form-field');
+const Constants = require('uxcore-const');
+const classnames = require('classnames');
+const Calendar = require('uxcore-calendar');
+const assign = require('object-assign');
+const deepcopy = require('deepcopy');
+const Formatter = require('uxcore-formatter');
 
 class DateFormField extends FormField {
     constructor(props) {

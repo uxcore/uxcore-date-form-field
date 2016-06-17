@@ -1,5 +1,9 @@
 # history
 
+## 0.2.1
+
+`FIX` fix server render
+
 ## 0.2.0
 
 `CHANGED` update uxcore-calendar to ~0.4.0
