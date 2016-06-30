@@ -1,5 +1,9 @@
 # history
 
+## 0.2.2
+
+`NEW` add new prop `panel` to support MonthPanel and YearPanel
+
 ## 0.2.1
 
 `FIX` fix server render

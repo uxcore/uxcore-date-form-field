@@ -14,6 +14,11 @@ const Calendar = require('uxcore-calendar');
 const assign = require('object-assign');
 const deepcopy = require('deepcopy');
 const Formatter = require('uxcore-formatter');
+const CalendarPanel = {
+    month: Calendar.MonthCalendar,
+    year: Calendar.YearCalendar,
+    day: Calendar,
+}
 
 class DateFormField extends FormField {
     constructor(props) {
@@ -67,13 +72,14 @@ class DateFormField extends FormField {
 
     renderField() {
         let me = this;
-        let {onSelect, style, prefixCls, value, jsxtype, jsxfrom, jsxto, disabledDate, ...others} = me.props;
+        let {onSelect, style, prefixCls, value, jsxtype, jsxfrom, jsxto, disabledDate, panel, ...others} = me.props;
         let from = !!jsxfrom ? me.processTime(jsxfrom) : 0;
         let to = !!jsxto ? me.processTime(jsxto) : Infinity;
         let mode = me.props.jsxmode || me.props.mode;
         if (mode == Constants.MODE.EDIT) {
+            const Panel = CalendarPanel[panel];
             if (jsxtype == "single") {
-                return <Calendar
+                return <Panel
                         value={me.state.value}
                         onSelect={me.handleChange.bind(me)}
                         disabledDate={disabledDate ? disabledDate : (current, value) => {
@@ -108,7 +114,7 @@ class DateFormField extends FormField {
                         value: null
                     });
                 }
-                arr.push(<Calendar
+                arr.push(<Panel
                         key="calendar1"
                         onSelect={me.handleCascadeChange.bind(me, 0)}
                         disabledDate={(current, value) => {
@@ -118,7 +124,7 @@ class DateFormField extends FormField {
                         {...others1}/>);
                 arr.push(<span key="split" className="kuma-uxform-split">-</span>)
 
-                arr.push(<Calendar
+                arr.push(<Panel
                         key="calendar2"
                         onSelect={me.handleCascadeChange.bind(me, 1)}
                         disabledDate={(current, value) => {
@@ -151,10 +157,12 @@ class DateFormField extends FormField {
 DateFormField.displayName = "DateFormField";
 DateFormField.propTypes = assign(FormField.propTypes, {
     jsxtype: React.PropTypes.string,
+    panel: React.PropTypes.string,
 });
 DateFormField.defaultProps = assign(FormField.defaultProps, {
     locale: 'zh-cn',
     hasTrigger: true,
-    jsxtype: "single"
+    jsxtype: 'single',
+    panel: 'day',
 });
 module.exports = DateFormField;
