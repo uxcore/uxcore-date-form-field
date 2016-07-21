@@ -40,7 +40,7 @@ class Demo extends React.Component {
             <div>
                 <Form jsxmode={me.state.mode} ref="form">
                     <DateFormField format="yyyy-MM-dd HH:mm:ss" jsxname="date" jsxlabel="日期" jsxto={new Date().setDate(new Date().getDate() + 1)} locale="zh-cn" />
-                    <DateFormField panel="year" jsxtype="cascade" jsxname="casDate" jsxlabel="级联日期" format="yyyy/MM/dd" jsxto="2016-05-15"/>
+                    <DateFormField jsxtype="cascade" jsxname="casDate" jsxlabel="级联日期" format="yyyy/MM/dd" jsxto="2016-05-15" showDateInput />
                 </Form>
                 <Button onClick={me.handleModeChange.bind(me)}>切换模式</Button>
                 <Button onClick={me.handleValueGet.bind(me)}>获取数据</Button>

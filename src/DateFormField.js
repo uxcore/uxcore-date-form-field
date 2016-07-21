@@ -27,18 +27,20 @@ class DateFormField extends FormField {
 
     handleChange(value) {
         let me = this;
-        me.handleDataChange(new Date(value).getTime());
+        me.handleDataChange(value ? new Date(value).getTime() : null);
     }
 
     handleCascadeChange(i, value) {
         let me = this;
         let values = deepcopy(me.state.value) || [];
-        values[i] = new Date(value).getTime();
-        if (i == 0 && !!values[1] && new Date(value).getTime() > new Date(values[1]).getTime()) {
-            values.pop();
-        }
-        if (i == 1 && !!values[0] && new Date(value).getTime() < new Date(values[0]).getTime()) {
-            values[0] = undefined;
+        values[i] = value ? new Date(value).getTime() : undefined;
+        if (value) {
+            if (i == 0 && !!values[1] && new Date(value).getTime() > new Date(values[1]).getTime()) {
+                values.pop();
+            }
+            if (i == 1 && !!values[0] && new Date(value).getTime() < new Date(values[0]).getTime()) {
+                values[0] = undefined;
+            }
         }
         me.handleDataChange(values);
     }
@@ -85,6 +87,9 @@ class DateFormField extends FormField {
                         disabledDate={disabledDate ? disabledDate : (current, value) => {
                             // if showTime is true or timePicker is set, we use time to compare
                             // otherwise we use day to compare
+                            if (!current) {
+                                return false;
+                            }
 
                             return (me.processTime(current.getTime()) < from || me.processTime(current.getTime()) > to)
                         }}
@@ -118,6 +123,9 @@ class DateFormField extends FormField {
                         key="calendar1"
                         onSelect={me.handleCascadeChange.bind(me, 0)}
                         disabledDate={(current, value) => {
+                            if (!current) {
+                                return false;
+                            }
                             let now = me.processTime(current.getTime());
                             return (now < from || now > to)
                         }}
@@ -128,6 +136,9 @@ class DateFormField extends FormField {
                         key="calendar2"
                         onSelect={me.handleCascadeChange.bind(me, 1)}
                         disabledDate={(current, value) => {
+                            if (!current) {
+                                return false;
+                            }
                             let now = me.processTime(current.getTime());
                             let first = me.state.value ? me.state.value[0] : 0;
                             first = me.processTime(first);
