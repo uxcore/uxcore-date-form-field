@@ -1,5 +1,9 @@
 # history
 
+## 0.2.3
+
+`FIXED` fix bug when using showDateInput
+
 ## 0.2.2
 
 `NEW` add new prop `panel` to support MonthPanel and YearPanel
