@@ -1,5 +1,9 @@
 # history
 
+## 0.3.0
+
+`CHANGED` update dependency `uxcore-calendar` to ~0.5.0 
+
 ## 0.2.3
 
 `FIXED` fix bug when using showDateInput
