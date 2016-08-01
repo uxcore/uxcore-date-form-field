@@ -1,5 +1,10 @@
 # history
 
+
+## 0.3.1
+
+`NEW` support new prop `useFormat`, DateFormField will use formatted value to communicate. 
+
 ## 0.3.0
 
 `CHANGED` update dependency `uxcore-calendar` to ~0.5.0 

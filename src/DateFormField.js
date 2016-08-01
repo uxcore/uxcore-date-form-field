@@ -25,15 +25,31 @@ class DateFormField extends FormField {
         super(props);
     }
 
-    handleChange(value) {
-        let me = this;
-        me.handleDataChange(value ? new Date(value).getTime() : null);
+    handleChange(value, format) {
+        const me = this;
+        const { useFormat } = me.props;
+        let data;
+        if (useFormat) {
+            data = format;
+        }
+        else {
+            data = value ? new Date(value).getTime() : null;
+        }
+        me.handleDataChange(data);
     }
 
-    handleCascadeChange(i, value) {
-        let me = this;
+    handleCascadeChange(i, value, format) {
+        const me = this;
         let values = deepcopy(me.state.value) || [];
-        values[i] = value ? new Date(value).getTime() : undefined;
+        const { useFormat } = me.props;
+        let data;
+        if (useFormat) {
+           data = format; 
+        }
+        else {
+            data = value ? new Date(value).getTime() : undefined;
+        }
+        values[i] = data;
         if (value) {
             if (i == 0 && !!values[1] && new Date(value).getTime() > new Date(values[1]).getTime()) {
                 values.pop();
@@ -169,11 +185,13 @@ DateFormField.displayName = "DateFormField";
 DateFormField.propTypes = assign(FormField.propTypes, {
     jsxtype: React.PropTypes.string,
     panel: React.PropTypes.string,
+    useFormat: React.PropTypes.bool,
 });
 DateFormField.defaultProps = assign(FormField.defaultProps, {
     locale: 'zh-cn',
     hasTrigger: true,
     jsxtype: 'single',
     panel: 'day',
+    useFormat: false,
 });
 module.exports = DateFormField;
