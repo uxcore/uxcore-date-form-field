@@ -1,6 +1,10 @@
 # history
 
 
+## 0.3.2
+
+`FIX` date before 1970.01.01 cannot be selected.
+
 ## 0.3.1
 
 `NEW` support new prop `useFormat`, DateFormField will use formatted value to communicate. 

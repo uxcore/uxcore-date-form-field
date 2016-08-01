@@ -91,7 +91,7 @@ class DateFormField extends FormField {
     renderField() {
         let me = this;
         let {onSelect, style, prefixCls, value, jsxtype, jsxfrom, jsxto, disabledDate, panel, ...others} = me.props;
-        let from = !!jsxfrom ? me.processTime(jsxfrom) : 0;
+        let from = !!jsxfrom ? me.processTime(jsxfrom) : -Infinity;
         let to = !!jsxto ? me.processTime(jsxto) : Infinity;
         let mode = me.props.jsxmode || me.props.mode;
         if (mode == Constants.MODE.EDIT) {
