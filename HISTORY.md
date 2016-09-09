@@ -1,5 +1,8 @@
 # history
 
+## 0.4.0
+
+`CHANGED` update uxcore-calendar to ~0.6.0
 
 ## 0.3.2
 
