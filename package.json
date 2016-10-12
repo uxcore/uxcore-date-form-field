@@ -1,6 +1,6 @@
 {
  "name": "uxcore-date-form-field",
- "version": "0.4.0",
+ "version": "0.4.1",
  "description": "uxcore-date-form-field component for uxcore.",
  "repository": "https://github.com/uxcore/uxcore-date-form-field.git",
  "author": "eternalsky",
@@ -33,6 +33,11 @@
  "devDependencies": {
   "console-polyfill": "^0.2.2",
   "es5-shim": "^4.5.8",
+  "eslint": "^3.7.1",
+  "eslint-config-airbnb": "^12.0.0",
+  "eslint-plugin-import": "^1.16.0",
+  "eslint-plugin-jsx-a11y": "^2.2.3",
+  "eslint-plugin-react": "^6.4.1",
   "expect.js": "~0.3.1",
   "kuma-base": "1.x",
   "react": "0.14.x",
@@ -45,7 +50,7 @@
  },
  "dependencies": {
   "classnames": "^2.1.2",
-  "deepcopy": "~0.5.0",
+  "lodash": "^4.16.4",
   "object-assign": "^4.0.0",
   "uxcore-calendar": "~0.6.0",
   "uxcore-const": "0.0.2",

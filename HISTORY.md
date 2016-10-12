@@ -1,5 +1,10 @@
 # history
 
+## 0.4.1
+
+`CHANGED` js style standardization
+`CHANGED` `disabled` `placeholder` support array
+
 ## 0.4.0
 
 `CHANGED` update uxcore-calendar to ~0.6.0
