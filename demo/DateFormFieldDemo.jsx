@@ -59,8 +59,7 @@ class Demo extends React.Component {
             jsxtype="cascade"
             jsxname="casDate"
             jsxlabel="级联日期"
-            format="yyyy/MM/dd"
-            jsxto="2016-08-15"
+            format={['yyyy/MM/dd', 'yyyy']}
             showDateInput
           />
         </Form>

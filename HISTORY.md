@@ -1,5 +1,9 @@
 # history
 
+## 0.4.2
+
+`CHANGED` `format` support array
+
 ## 0.4.1
 
 `CHANGED` js style standardization

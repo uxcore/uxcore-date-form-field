@@ -133,12 +133,15 @@ class DateFormField extends FormField {
             value: me.state.value[0],
             disabled: getPropFromArray(others.disabled, 0),
             placeholder: getPropFromArray(others.placeholder, 0),
+            format: getPropFromArray(others.format, 0),
           });
         } else {
           others1 = assign({}, others, {
             value: null,
             disabled: getPropFromArray(others.disabled, 0),
             placeholder: getPropFromArray(others.placeholder, 0),
+            format: getPropFromArray(others.format, 0),
+
           });
         }
         if (me.state.value && me.state.value[1]) {
@@ -146,12 +149,14 @@ class DateFormField extends FormField {
             value: me.state.value[1],
             disabled: getPropFromArray(others.disabled, 1),
             placeholder: getPropFromArray(others.placeholder, 1),
+            format: getPropFromArray(others.format, 1),
           });
         } else {
           others2 = assign({}, others, {
             value: null,
             disabled: getPropFromArray(others.disabled, 1),
             placeholder: getPropFromArray(others.placeholder, 1),
+            format: getPropFromArray(others.format, 1),
           });
         }
         arr.push(
