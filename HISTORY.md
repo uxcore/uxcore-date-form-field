@@ -1,5 +1,9 @@
 # history
 
+## 0.4.3
+
+`CHANGED` cascade mode support `disabledDate`
+
 ## 0.4.2
 
 `CHANGED` `format` support array

@@ -126,38 +126,38 @@ class DateFormField extends FormField {
         );
       } else if (jsxtype === 'cascade') {
         const arr = [];
-        let others1 = assign({}, others);
-        let others2 = assign({}, others);
+        let others1;
+        let others2;
+        const propsFromArray1 = {
+          disabled: getPropFromArray(others.disabled, 0),
+          placeholder: getPropFromArray(others.placeholder, 0),
+          format: getPropFromArray(others.format, 0),
+          disabledDate: getPropFromArray(disabledDate, 0),
+        };
+
+        const propsFromArray2 = {
+          disabled: getPropFromArray(others.disabled, 1),
+          placeholder: getPropFromArray(others.placeholder, 1),
+          format: getPropFromArray(others.format, 1),
+          disabledDate: getPropFromArray(disabledDate, 1),
+        };
         if (me.state.value && me.state.value[0]) {
           others1 = assign({}, others, {
             value: me.state.value[0],
-            disabled: getPropFromArray(others.disabled, 0),
-            placeholder: getPropFromArray(others.placeholder, 0),
-            format: getPropFromArray(others.format, 0),
-          });
+          }, propsFromArray1);
         } else {
           others1 = assign({}, others, {
             value: null,
-            disabled: getPropFromArray(others.disabled, 0),
-            placeholder: getPropFromArray(others.placeholder, 0),
-            format: getPropFromArray(others.format, 0),
-
-          });
+          }, propsFromArray1);
         }
         if (me.state.value && me.state.value[1]) {
           others2 = assign({}, others, {
             value: me.state.value[1],
-            disabled: getPropFromArray(others.disabled, 1),
-            placeholder: getPropFromArray(others.placeholder, 1),
-            format: getPropFromArray(others.format, 1),
-          });
+          }, propsFromArray2);
         } else {
           others2 = assign({}, others, {
             value: null,
-            disabled: getPropFromArray(others.disabled, 1),
-            placeholder: getPropFromArray(others.placeholder, 1),
-            format: getPropFromArray(others.format, 1),
-          });
+          }, propsFromArray2);
         }
         arr.push(
           <Panel
