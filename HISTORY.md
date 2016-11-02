@@ -1,5 +1,9 @@
 # history
 
+## 0.4.4
+
+`CHANGED` use `processTime` in `handleCascadeChange` & `handleChange` method.
+
 ## 0.4.3
 
 `CHANGED` cascade mode support `disabledDate`

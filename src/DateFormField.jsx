@@ -36,7 +36,7 @@ class DateFormField extends FormField {
     if (useFormat) {
       data = format;
     } else {
-      data = value ? new Date(value).getTime() : null;
+      data = value ? me.processTime(value) : null;
     }
     me.handleDataChange(data);
   }
@@ -49,14 +49,18 @@ class DateFormField extends FormField {
     if (useFormat) {
       data = format;
     } else {
-      data = value ? new Date(value).getTime() : undefined;
+      data = value ? me.processTime(value) : undefined;
     }
     values[i] = data;
     if (value) {
-      if (i === 0 && !!values[1] && new Date(value).getTime() > new Date(values[1]).getTime()) {
+      if (i === 0
+        && !!values[1]
+        && me.processTime(value) > me.processTime(values[1])) {
         values.pop();
       }
-      if (i === 1 && !!values[0] && new Date(value).getTime() < new Date(values[0]).getTime()) {
+      if (i === 1
+        && !!values[0]
+        && me.processTime(value) < me.processTime(values[0])) {
         values[0] = undefined;
       }
     }
@@ -98,7 +102,7 @@ class DateFormField extends FormField {
       jsxto,
       disabledDate,
       panel,
-      ...others,
+      ...others
     } = me.props;
     /* eslint-enable no-unused-vars */
     const from = jsxfrom ? me.processTime(jsxfrom) : -Infinity;
