@@ -1,5 +1,9 @@
 # history
 
+## 0.4.5
+
+`FIXED` spread attributes with undefined key will override the previous attribute [#4](https://github.com/uxcore/uxcore-date-form-field/issues/4)
+
 ## 0.4.4
 
 `CHANGED` use `processTime` in `handleCascadeChange` & `handleChange` method.
