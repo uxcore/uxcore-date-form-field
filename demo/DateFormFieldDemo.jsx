@@ -51,6 +51,7 @@ class Demo extends React.Component {
             jsxtype="cascade"
             useFormat
             format="yyyy-MM-dd"
+            jsxfrom="2016-11-24"
             jsxname="format"
             jsxlabel="useFormat"
             locale="zh-cn"

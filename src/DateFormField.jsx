@@ -12,6 +12,8 @@ const Constants = require('uxcore-const');
 const Calendar = require('uxcore-calendar');
 const assign = require('object-assign');
 const deepcopy = require('lodash/cloneDeep');
+const omitBy = require('lodash/omitBy');
+const isNil = require('lodash/isNil');
 const Formatter = require('uxcore-formatter');
 
 const CalendarPanel = {
@@ -148,20 +150,20 @@ class DateFormField extends FormField {
         if (me.state.value && me.state.value[0]) {
           others1 = assign({}, others, {
             value: me.state.value[0],
-          }, propsFromArray1);
+          }, omitBy(propsFromArray1, isNil));
         } else {
           others1 = assign({}, others, {
             value: null,
-          }, propsFromArray1);
+          }, omitBy(propsFromArray1, isNil));
         }
         if (me.state.value && me.state.value[1]) {
           others2 = assign({}, others, {
             value: me.state.value[1],
-          }, propsFromArray2);
+          }, omitBy(propsFromArray2, isNil));
         } else {
           others2 = assign({}, others, {
             value: null,
-          }, propsFromArray2);
+          }, omitBy(propsFromArray2, isNil));
         }
         arr.push(
           <Panel
