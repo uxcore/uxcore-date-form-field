@@ -1,5 +1,9 @@
 # history
 
+## 0.4.6
+
+`NEW` add new prop `autoMatchWidth`
+
 ## 0.4.5
 
 `FIXED` spread attributes with undefined key will override the previous attribute [#4](https://github.com/uxcore/uxcore-date-form-field/issues/4)

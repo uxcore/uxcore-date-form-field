@@ -15,6 +15,7 @@ const deepcopy = require('lodash/cloneDeep');
 const omitBy = require('lodash/omitBy');
 const isNil = require('lodash/isNil');
 const Formatter = require('uxcore-formatter');
+const addEventListener = require('rc-util/lib/Dom/addEventListener');
 
 const CalendarPanel = {
   month: Calendar.MonthCalendar,
@@ -30,6 +31,53 @@ const getPropFromArray = (arr, index) => {
 };
 
 class DateFormField extends FormField {
+
+  constructor(props) {
+    super(props);
+    this.resize = this.resize.bind(this);
+  }
+
+  componentDidMount() {
+    super.componentDidMount();
+    const me = this;
+    const { jsxtype, autoMatchWidth } = me.props;
+    if (jsxtype === 'cascade' && autoMatchWidth) {
+      this.resize();
+      this.resizeListenner = addEventListener(window, 'resize', this.resize);
+    }
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    if (this.resizeListenner) {
+      this.resizeListenner.remove();
+    }
+  }
+
+  resize() {
+    const fieldCore = this.getFieldCore();
+    const calendar1 = this.calendar1.getTriggerNode();
+    const calendar2 = this.calendar2.getTriggerNode();
+    const split = this.split;
+    if (fieldCore.clientWidth % 2 === 1) {
+      split.style.width = '5px';
+    }
+    const splitCurrentStyle = split.currentStyle || window.getComputedStyle(split);
+    const splitOuterWidth = split.clientWidth
+        + parseInt(splitCurrentStyle.marginLeft, 10)
+        + parseInt(splitCurrentStyle.marginRight, 10);
+    const calendarWidth = (fieldCore.clientWidth - splitOuterWidth) / 2;
+    calendar1.style.width = `${calendarWidth}px`;
+    calendar2.style.width = `${calendarWidth}px`;
+  }
+
+
+  saveRef(refName) {
+    const me = this;
+    return (c) => {
+      me[refName] = c;
+    };
+  }
 
   handleChange(value, format) {
     const me = this;
@@ -168,6 +216,7 @@ class DateFormField extends FormField {
         arr.push(
           <Panel
             key="calendar1"
+            ref={me.saveRef('calendar1')}
             onSelect={me.handleCascadeChange.bind(me, 0)}
             disabledDate={(current) => {
               if (!current) {
@@ -179,11 +228,12 @@ class DateFormField extends FormField {
             {...others1}
           />
         );
-        arr.push(<span key="split" className="kuma-uxform-split">-</span>);
+        arr.push(<span style={{ width: '6px' }} key="split" ref={me.saveRef('split')} className="kuma-uxform-split">-</span>);
 
         arr.push(
           <Panel
             key="calendar2"
+            ref={me.saveRef('calendar2')}
             onSelect={me.handleCascadeChange.bind(me, 1)}
             disabledDate={(current) => {
               if (!current) {
@@ -226,11 +276,13 @@ DateFormField.propTypes = assign(FormField.propTypes, {
   jsxtype: React.PropTypes.string,
   panel: React.PropTypes.string,
   useFormat: React.PropTypes.bool,
+  autoMatchWidth: React.PropTypes.bool,
 });
 DateFormField.defaultProps = assign(FormField.defaultProps, {
   locale: 'zh-cn',
   hasTrigger: true,
   jsxtype: 'single',
+  autoMatchWidth: false,
   panel: 'day',
   useFormat: false,
 });

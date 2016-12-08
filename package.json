@@ -1,6 +1,6 @@
 {
  "name": "uxcore-date-form-field",
- "version": "0.4.5",
+ "version": "0.4.6",
  "description": "uxcore-date-form-field component for uxcore.",
  "repository": "https://github.com/uxcore/uxcore-date-form-field.git",
  "author": "eternalsky",
@@ -52,9 +52,10 @@
   "classnames": "^2.1.2",
   "lodash": "^4.16.4",
   "object-assign": "^4.0.0",
+  "rc-util": "^4.0.2",
   "uxcore-calendar": "~0.6.0",
   "uxcore-const": "0.0.2",
-  "uxcore-form-field": "~0.1.2",
+  "uxcore-form-field": "~0.2.2",
   "uxcore-formatter": "~0.1.2"
  },
  "contributors": [],

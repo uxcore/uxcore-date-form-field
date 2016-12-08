@@ -49,6 +49,7 @@ class Demo extends React.Component {
           />
           <DateFormField
             jsxtype="cascade"
+            autoMatchWidth
             useFormat
             format="yyyy-MM-dd"
             jsxfrom="2016-11-24"
