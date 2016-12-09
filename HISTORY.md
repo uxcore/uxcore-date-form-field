@@ -1,5 +1,9 @@
 # history
 
+## 0.5.1
+
+`CHANGED` optimize resize performance
+
 ## 0.5.0
 
 `NEW` add new prop `autoMatchWidth`

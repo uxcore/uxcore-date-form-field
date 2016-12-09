@@ -56,9 +56,13 @@ class DateFormField extends FormField {
 
   resize() {
     const fieldCore = this.getFieldCore();
+    if (this.fieldWidth && this.fieldWidth === fieldCore.clientWidth) {
+      return;
+    }
     const calendar1 = this.calendar1.getTriggerNode();
     const calendar2 = this.calendar2.getTriggerNode();
     const split = this.split;
+    this.fieldWidth = fieldCore.clientWidth;
     if (fieldCore.clientWidth % 2 === 1) {
       split.style.width = '5px';
     }
