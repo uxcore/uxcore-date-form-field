@@ -1,8 +1,9 @@
 # history
 
-## 0.4.6
+## 0.5.0
 
 `NEW` add new prop `autoMatchWidth`
+`CHANGED` update formField to ~0.2.0
 
 ## 0.4.5
 
