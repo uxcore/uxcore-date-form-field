@@ -143,6 +143,7 @@ class DateFormField extends FormField {
     }
     return new Date(Formatter.date(time, 'YYYY-MM-DD')).getTime();
   }
+
   renderField() {
     const me = this;
     /* eslint-disable no-unused-vars */
