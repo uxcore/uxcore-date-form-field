@@ -1,5 +1,9 @@
 # history
 
+## 0.6.0
+
+* `CHANGED` update `uxcore-calendar` to ~0.7.0
+
 ## 0.5.1
 
 `CHANGED` optimize resize performance
