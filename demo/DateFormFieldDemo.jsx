@@ -39,7 +39,11 @@ class Demo extends React.Component {
     const me = this;
     return (
       <div>
-        <Form jsxmode={me.state.mode} ref={(c) => { me.form = c; return false; }}>
+        <Form
+          className="testWidth"
+          jsxmode={me.state.mode}
+          ref={(c) => { me.form = c; return false; }}
+        >
           <DateFormField
             showTime
             format="yyyy-MM-dd HH:mm:ss"

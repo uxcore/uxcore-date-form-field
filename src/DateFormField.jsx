@@ -23,6 +23,25 @@ const CalendarPanel = {
   day: Calendar,
 };
 
+const getIEVer = () => {
+  if (window) {
+    const ua = window.navigator.userAgent;
+    const idx = ua.indexOf('MSIE');
+    if (idx > 0) {
+        // "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64;
+        // Trident/6.0; SLCC2; .NET CLR 2.0.50727)"
+      return parseInt(ua.substring(idx + 5, ua.indexOf('.', idx)), 10);
+    }
+    if (ua.match(/Trident\/7\./)) {
+        // "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; SLCC2;
+        // .NET CLR 2.0.50727; rv:11.0) like Gecko"
+      return 11;
+    }
+    return 0;
+  }
+  return 0;
+};
+
 const getPropFromArray = (arr, index) => {
   if (arr instanceof Array) {
     return arr[index];
@@ -63,6 +82,7 @@ class DateFormField extends FormField {
     const calendar2 = this.calendar2.getTriggerNode();
     const split = this.split;
     this.fieldWidth = parseInt(fieldCore.clientWidth, 10);
+    const isIE = getIEVer() >= 8;
     if (this.fieldWidth % 2 === 1) {
       split.style.width = '5px';
     }
@@ -71,6 +91,11 @@ class DateFormField extends FormField {
         + parseInt(splitCurrentStyle.marginLeft, 10)
         + parseInt(splitCurrentStyle.marginRight, 10);
     const calendarWidth = (this.fieldWidth - splitOuterWidth) / 2;
+    // in IE, if the core width has decimal, like 280.95px;
+    // the clientWidth would be 281, and would cause break line if 281 is used
+    if (isIE) {
+      split.style.width = `${parseInt(split.style.width, 10) - 1}px`;
+    }
     calendar1.style.width = `${calendarWidth}px`;
     calendar2.style.width = `${calendarWidth}px`;
   }
