@@ -56,21 +56,21 @@ class DateFormField extends FormField {
 
   resize() {
     const fieldCore = this.getFieldCore();
-    if (this.fieldWidth && this.fieldWidth === fieldCore.clientWidth) {
+    if (this.fieldWidth && this.fieldWidth === parseInt(fieldCore.clientWidth, 10)) {
       return;
     }
     const calendar1 = this.calendar1.getTriggerNode();
     const calendar2 = this.calendar2.getTriggerNode();
     const split = this.split;
-    this.fieldWidth = fieldCore.clientWidth;
-    if (fieldCore.clientWidth % 2 === 1) {
+    this.fieldWidth = parseInt(fieldCore.clientWidth, 10);
+    if (this.fieldWidth % 2 === 1) {
       split.style.width = '5px';
     }
     const splitCurrentStyle = split.currentStyle || window.getComputedStyle(split);
     const splitOuterWidth = split.clientWidth
         + parseInt(splitCurrentStyle.marginLeft, 10)
         + parseInt(splitCurrentStyle.marginRight, 10);
-    const calendarWidth = (fieldCore.clientWidth - splitOuterWidth) / 2;
+    const calendarWidth = (this.fieldWidth - splitOuterWidth) / 2;
     calendar1.style.width = `${calendarWidth}px`;
     calendar2.style.width = `${calendarWidth}px`;
   }

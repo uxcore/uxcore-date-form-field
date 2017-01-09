@@ -4,6 +4,10 @@
 
 * `CHANGED` update `uxcore-calendar` to ~0.7.0
 
+## 0.5.2
+
+* `FIXED` use parseInt to get core width, fix the width bug in IE 11.
+
 ## 0.5.1
 
 `CHANGED` optimize resize performance
