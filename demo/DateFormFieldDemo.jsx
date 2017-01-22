@@ -45,8 +45,8 @@ class Demo extends React.Component {
           ref={(c) => { me.form = c; return false; }}
         >
           <DateFormField
-            showTime
-            format="yyyy-MM-dd HH:mm:ss"
+            showTime={false}
+            format="yyyy-MM-dd"
             jsxname="date"
             jsxlabel="日期"
             locale="zh-cn"

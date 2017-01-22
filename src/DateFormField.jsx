@@ -166,7 +166,14 @@ class DateFormField extends FormField {
     if (showTime || timePicker) {
       return new Date(time).getTime();
     }
-    return new Date(Formatter.date(time, 'YYYY-MM-DD')).getTime();
+    const newTime = new Date(time);
+    newTime.setHours(0);
+    newTime.setMinutes(0);
+    newTime.setSeconds(0);
+    newTime.setMilliseconds(0);
+    return newTime.getTime();
+    // new Date(dateString) will parse time as UTC+0!
+    // return new Date(Formatter.date(time, 'YYYY-MM-DD')).getTime();
   }
 
   renderField() {
