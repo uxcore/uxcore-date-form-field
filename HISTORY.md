@@ -1,8 +1,12 @@
 # history
 
+## 0.7.0
+
+* `CHANGED` update `uxcore-calendar` to ~0.8.0
+
 ## 0.6.1
 
-* `FIXED` `processTime` timezone bug 
+* `FIXED` `processTime` timezone bug (also fix in ver. 0.4.x ~ 0.5.x)
 
 ## 0.6.0
 
