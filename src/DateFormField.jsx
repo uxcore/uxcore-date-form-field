@@ -28,13 +28,13 @@ const getIEVer = () => {
     const ua = window.navigator.userAgent;
     const idx = ua.indexOf('MSIE');
     if (idx > 0) {
-        // "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64;
-        // Trident/6.0; SLCC2; .NET CLR 2.0.50727)"
+      // "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64;
+      // Trident/6.0; SLCC2; .NET CLR 2.0.50727)"
       return parseInt(ua.substring(idx + 5, ua.indexOf('.', idx)), 10);
     }
     if (ua.match(/Trident\/7\./)) {
-        // "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; SLCC2;
-        // .NET CLR 2.0.50727; rv:11.0) like Gecko"
+      // "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; SLCC2;
+      // .NET CLR 2.0.50727; rv:11.0) like Gecko"
       return 11;
     }
     return 0;
@@ -47,6 +47,14 @@ const getPropFromArray = (arr, index) => {
     return arr[index];
   }
   return arr;
+};
+
+const getViewText = (value, format) => {
+  const date = new Date(value);
+  if (isNaN(date)) {
+    return value;
+  }
+  return Formatter.date(value, format);
 };
 
 class DateFormField extends FormField {
@@ -88,8 +96,8 @@ class DateFormField extends FormField {
     }
     const splitCurrentStyle = split.currentStyle || window.getComputedStyle(split);
     const splitOuterWidth = split.clientWidth
-        + parseInt(splitCurrentStyle.marginLeft, 10)
-        + parseInt(splitCurrentStyle.marginRight, 10);
+      + parseInt(splitCurrentStyle.marginLeft, 10)
+      + parseInt(splitCurrentStyle.marginRight, 10);
     const calendarWidth = (this.fieldWidth - splitOuterWidth) / 2;
     // in IE, if the core width has decimal, like 280.95px;
     // the clientWidth would be 281, and would cause break line if 281 is used
@@ -292,17 +300,25 @@ class DateFormField extends FormField {
         defautFormat = 'YYYY-MM-DD HH:mm:ss';
       }
       if (jsxtype === 'single') {
-        return <span>{me.state.value ? Formatter.date(me.state.value, (me.props.format || defautFormat)) : ''}</span>;
+        return <span>{getViewText(me.state.value, (me.props.format || defautFormat))}</span>;
       }
       return (
         <span>
-          {me.state.value
-            ? me.state.value
-              .map(item => Formatter.date(item, (me.props.format || defautFormat)))
-              .join(' - ')
-            : ''}
+          {me.state.value instanceof Array ? me.state.value
+              .map(item => getViewText(item, (me.props.format || defautFormat)))
+              .join(' - ') : me.state.value}
         </span>
       );
+      /* try {
+
+      } catch (err) {
+        console.error(err.stack);
+        return (
+          <span>
+            {jsxtype === 'single' ? me.state.value : me.state.value.join(' ')}
+          </span>
+        );
+      }*/
     }
     return null;
   }

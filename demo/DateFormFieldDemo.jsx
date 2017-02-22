@@ -43,6 +43,8 @@ class Demo extends React.Component {
           className="testWidth"
           jsxmode={me.state.mode}
           ref={(c) => { me.form = c; return false; }}
+          jsxvalues={{
+          }}
         >
           <DateFormField
             showTime={false}
