@@ -1,5 +1,9 @@
 # history
 
+## 0.8.0
+
+* `CHANGED` update `uxcore-calendar` to ~0.9.0
+
 ## 0.7.1
 
 * `CHANGED` show key if label is not found in view mode
