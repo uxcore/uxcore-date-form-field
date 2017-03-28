@@ -44,6 +44,7 @@ class Demo extends React.Component {
           jsxmode={me.state.mode}
           ref={(c) => { me.form = c; return false; }}
           jsxvalues={{
+            casDate: ['2016-01-02', '2016-02-03'],
           }}
         >
           <DateFormField
@@ -67,7 +68,7 @@ class Demo extends React.Component {
             jsxtype="cascade"
             jsxname="casDate"
             jsxlabel="级联日期"
-            format="yyyy-MM-dd HH:mm:ss"
+            panel="year"
             showTime
             showDateInput
           />

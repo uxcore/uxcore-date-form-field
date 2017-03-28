@@ -4,6 +4,10 @@
 
 * `CHANGED` update `uxcore-calendar` to ~0.9.0
 
+## 0.7.2
+
+* `CHANGED` use different default format in `year` & `month` panel
+
 ## 0.7.1
 
 * `CHANGED` show key if label is not found in view mode

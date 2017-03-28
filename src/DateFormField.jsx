@@ -295,17 +295,23 @@ class DateFormField extends FormField {
         return arr;
       }
     } else if (mode === Constants.MODE.VIEW) {
-      let defautFormat = 'YYYY-MM-DD';
+      let defaultFormat = 'YYYY-MM-DD';
       if (me.props.showTime || me.props.timePicker) {
-        defautFormat = 'YYYY-MM-DD HH:mm:ss';
+        defaultFormat = 'YYYY-MM-DD HH:mm:ss';
+      }
+      if (panel === 'month') {
+        defaultFormat = 'YYYY-MM';
+      }
+      if (panel === 'year') {
+        defaultFormat = 'YYYY';
       }
       if (jsxtype === 'single') {
-        return <span>{getViewText(me.state.value, (me.props.format || defautFormat))}</span>;
+        return <span>{getViewText(me.state.value, (me.props.format || defaultFormat))}</span>;
       }
       return (
         <span>
           {me.state.value instanceof Array ? me.state.value
-              .map(item => getViewText(item, (me.props.format || defautFormat)))
+              .map(item => getViewText(item, (me.props.format || defaultFormat)))
               .join(' - ') : me.state.value}
         </span>
       );
