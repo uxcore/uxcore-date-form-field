@@ -4,6 +4,10 @@
 
 * `CHANGED` update `uxcore-calendar` to ~0.9.0
 
+## 0.7.3
+
+* `FIXED` view mode will show 1970-01-01 if value is null
+
 ## 0.7.2
 
 * `CHANGED` use different default format in `year` & `month` panel

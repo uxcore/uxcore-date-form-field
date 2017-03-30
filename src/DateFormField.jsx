@@ -51,7 +51,7 @@ const getPropFromArray = (arr, index) => {
 
 const getViewText = (value, format) => {
   const date = new Date(value);
-  if (isNaN(date)) {
+  if (isNaN(date) || value === null) {
     return value;
   }
   return Formatter.date(value, format);
