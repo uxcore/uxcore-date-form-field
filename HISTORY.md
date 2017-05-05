@@ -1,5 +1,9 @@
 # history
 
+## 0.8.3
+
+* `FIXED` resize bug in view mode
+
 ## 0.8.0
 
 * `CHANGED` update `uxcore-calendar` to ~0.9.0
