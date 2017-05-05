@@ -68,7 +68,8 @@ class DateFormField extends FormField {
     super.componentDidMount();
     const me = this;
     const { jsxtype, autoMatchWidth } = me.props;
-    if (jsxtype === 'cascade' && autoMatchWidth) {
+    const mode = me.props.jsxmode || me.props.mode;
+    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT) {
       this.resize();
       this.resizeListenner = addEventListener(window, 'resize', this.resize);
     }
