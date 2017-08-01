@@ -53,6 +53,7 @@ class Demo extends React.Component {
             jsxname="date"
             jsxlabel="日期"
             locale="zh-cn"
+            className="testField"
           />
           <DateFormField
             jsxtype="cascade"

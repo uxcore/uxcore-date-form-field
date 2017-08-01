@@ -1,5 +1,9 @@
 # history
 
+## 0.8.4
+
+* `FIXED` pass `className` to `Calendar`
+
 ## 0.8.3
 
 * `FIXED` resize bug in view mode

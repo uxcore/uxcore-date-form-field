@@ -187,12 +187,7 @@ class DateFormField extends FormField {
 
   renderField() {
     const me = this;
-    /* eslint-disable no-unused-vars */
     const {
-      onSelect,
-      style,
-      prefixCls,
-      value,
       jsxtype,
       jsxfrom,
       jsxto,
@@ -200,6 +195,12 @@ class DateFormField extends FormField {
       panel,
       ...others
     } = me.props;
+
+    // remove props which cannot be passed.
+    ['onSelect', 'style', 'prefixCls', 'value', 'className'].forEach((key) => {
+      delete others[key];
+    });
+
     /* eslint-enable no-unused-vars */
     const from = jsxfrom ? me.processTime(jsxfrom) : -Infinity;
     const to = jsxto ? me.processTime(jsxto) : Infinity;
@@ -316,16 +317,6 @@ class DateFormField extends FormField {
               .join(' - ') : me.state.value}
         </span>
       );
-      /* try {
-
-      } catch (err) {
-        console.error(err.stack);
-        return (
-          <span>
-            {jsxtype === 'single' ? me.state.value : me.state.value.join(' ')}
-          </span>
-        );
-      }*/
     }
     return null;
   }
