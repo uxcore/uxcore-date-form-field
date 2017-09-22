@@ -49,6 +49,7 @@ class Demo extends React.Component {
         >
           <DateFormField
             showTime={false}
+            size="small"
             format="yyyy-MM-dd"
             jsxname="date"
             jsxlabel="日期"

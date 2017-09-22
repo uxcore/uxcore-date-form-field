@@ -201,6 +201,8 @@ class DateFormField extends FormField {
       delete others[key];
     });
 
+    others.size = this.getSize();
+
     /* eslint-enable no-unused-vars */
     const from = jsxfrom ? me.processTime(jsxfrom) : -Infinity;
     const to = jsxto ? me.processTime(jsxto) : Infinity;

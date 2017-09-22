@@ -1,5 +1,9 @@
 # history
 
+## 0.8.5
+
+* `CHANGED` support size config
+
 ## 0.8.4
 
 * `FIXED` pass `className` to `Calendar`
