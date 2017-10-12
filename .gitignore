@@ -1,5 +1,4 @@
 *.iml
-coverage/
 *.log
 .idea/
 .ipr

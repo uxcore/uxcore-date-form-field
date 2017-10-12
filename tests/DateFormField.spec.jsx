@@ -1,11 +1,14 @@
 import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-15';
 import Form from 'uxcore-form/build/Form';
 import Constants from 'uxcore-const';
 import $ from 'jquery';
 import DateFormField from '../src';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const createDateField = (options = {}, values = {}) => {
   const opts = {
@@ -64,7 +67,7 @@ describe('DateFormField', () => {
       const w = mount(createDateField({ jsxtype: 'cascade', autoMatchWidth: true }));
       const d = w.find(DateFormField);
       expect(d.prop('autoMatchWidth')).to.be(true);
-      expect(d.node.resizeListenner.remove).to.be.a('function');
+      expect(d.instance().resizeListenner.remove).to.be.a('function');
     });
 
     it('render showtime date form field', (done) => {

@@ -6,12 +6,12 @@
  * All rights reserved.
  */
 
-const Form = require('uxcore-form/build/Form');
-const Button = require('uxcore-button');
-const Const = require('uxcore-const');
-const React = require('react');
+import Form from 'uxcore-form/build/Form';
 
-const DateFormField = require('../src');
+import Button from 'uxcore-button';
+import Const from 'uxcore-const';
+import React from 'react';
+import DateFormField from '../src';
 
 
 class Demo extends React.Component {
@@ -82,4 +82,4 @@ class Demo extends React.Component {
   }
 }
 
-module.exports = Demo;
+export default Demo;
