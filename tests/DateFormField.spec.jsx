@@ -202,7 +202,7 @@ describe('DateFormField', () => {
         jsxlabel: 'date2333',
         jsxtype: 'cascade',
       }),
-        document.getElementById('test-demo'));
+      document.getElementById('test-demo'));
       setTimeout(() => {
         $('.kuma-uxform-field input').click();
         setTimeout(() => {
