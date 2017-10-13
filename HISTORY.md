@@ -1,5 +1,9 @@
 # history
 
+## 0.8.6
+
+* `CHANGED` fit React@15
+
 ## 0.8.5
 
 * `CHANGED` support size config
