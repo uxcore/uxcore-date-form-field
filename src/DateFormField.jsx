@@ -6,16 +6,17 @@
  * All rights reserved.
  */
 
-const React = require('react');
-const FormField = require('uxcore-form-field');
-const Constants = require('uxcore-const');
-const Calendar = require('uxcore-calendar');
-const assign = require('object-assign');
-const deepcopy = require('lodash/cloneDeep');
-const omitBy = require('lodash/omitBy');
-const isNil = require('lodash/isNil');
-const Formatter = require('uxcore-formatter');
-const addEventListener = require('rc-util/lib/Dom/addEventListener');
+import React from 'react';
+import PropTypes from 'prop-types';
+import FormField from 'uxcore-form-field';
+import Constants from 'uxcore-const';
+import Calendar from 'uxcore-calendar';
+import assign from 'object-assign';
+import deepcopy from 'lodash/cloneDeep';
+import omitBy from 'lodash/omitBy';
+import isNil from 'lodash/isNil';
+import Formatter from 'uxcore-formatter';
+import addEventListener from 'rc-util/lib/Dom/addEventListener';
 
 const CalendarPanel = {
   month: Calendar.MonthCalendar,
@@ -58,7 +59,6 @@ const getViewText = (value, format) => {
 };
 
 class DateFormField extends FormField {
-
   constructor(props) {
     super(props);
     this.resize = this.resize.bind(this);
@@ -275,7 +275,7 @@ class DateFormField extends FormField {
               return (now < from || now > to);
             }}
             {...others1}
-          />
+          />,
         );
         arr.push(<span style={{ width: '6px' }} key="split" ref={me.saveRef('split')} className="kuma-uxform-split">-</span>);
 
@@ -294,7 +294,7 @@ class DateFormField extends FormField {
               return (now < from || now > to || now < first);
             }}
             {...others2}
-          />
+          />,
         );
         return arr;
       }
@@ -315,8 +315,8 @@ class DateFormField extends FormField {
       return (
         <span>
           {me.state.value instanceof Array ? me.state.value
-              .map(item => getViewText(item, (me.props.format || defaultFormat)))
-              .join(' - ') : me.state.value}
+            .map(item => getViewText(item, (me.props.format || defaultFormat)))
+            .join(' - ') : me.state.value}
         </span>
       );
     }
@@ -326,10 +326,10 @@ class DateFormField extends FormField {
 
 DateFormField.displayName = 'DateFormField';
 DateFormField.propTypes = assign(FormField.propTypes, {
-  jsxtype: React.PropTypes.string,
-  panel: React.PropTypes.string,
-  useFormat: React.PropTypes.bool,
-  autoMatchWidth: React.PropTypes.bool,
+  jsxtype: PropTypes.string,
+  panel: PropTypes.string,
+  useFormat: PropTypes.bool,
+  autoMatchWidth: PropTypes.bool,
 });
 DateFormField.defaultProps = assign(FormField.defaultProps, {
   locale: 'zh-cn',
@@ -339,4 +339,4 @@ DateFormField.defaultProps = assign(FormField.defaultProps, {
   panel: 'day',
   useFormat: false,
 });
-module.exports = DateFormField;
+export default DateFormField;
