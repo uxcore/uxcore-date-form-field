@@ -24,6 +24,18 @@ const CalendarPanel = {
   day: Calendar,
 };
 
+const getMode = props => props.jsxmode || props.mode;
+const getVerticalAlign = (props) => {
+  // jsxVerticalAlign is an internal varible.
+  let align = props.verticalAlign;
+  if (align === undefined) {
+    align = props.jsxVerticalAlign;
+  }
+  return align;
+};
+
+const getMaxWidth = props => props.inputBoxMaxWidth;
+
 const getIEVer = () => {
   if (window) {
     const ua = window.navigator.userAgent;
@@ -66,9 +78,8 @@ class DateFormField extends FormField {
 
   componentDidMount() {
     super.componentDidMount();
-    const me = this;
-    const { jsxtype, autoMatchWidth } = me.props;
-    const mode = me.props.jsxmode || me.props.mode;
+    const { jsxtype, autoMatchWidth } = this.props;
+    const mode = getMode(this.props);
     if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT) {
       this.resize();
       this.resizeListenner = addEventListener(window, 'resize', this.resize);
@@ -82,15 +93,37 @@ class DateFormField extends FormField {
     }
   }
 
-  resize() {
-    const fieldCore = this.getFieldCore();
-    if (this.fieldWidth && this.fieldWidth === parseInt(fieldCore.clientWidth, 10)) {
+  componentDidUpdate(prevProps) {
+    const { jsxtype, autoMatchWidth } = this.props;
+    const mode = getMode(this.props);
+    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT) {
+      const shouldResize = () => {
+        const methods = [getMode, getVerticalAlign, getMaxWidth];
+        for (let i = 0; i < methods.length; i += 1) {
+          const method = methods[i];
+          if (method(this.props) !== method(prevProps)) {
+            return true;
+          }
+        }
+        return false;
+      };
+      if (shouldResize()) {
+        this.resize(true);
+      }
+    }
+  }
+
+  resize(force) {
+    const cascadeBox = this.cascadeBox;
+    if (this.fieldWidth
+      && this.fieldWidth === parseInt(cascadeBox.clientWidth, 10)
+      && force !== true) {
       return;
     }
     const calendar1 = this.calendar1.getTriggerNode();
     const calendar2 = this.calendar2.getTriggerNode();
     const split = this.split;
-    this.fieldWidth = parseInt(fieldCore.clientWidth, 10);
+    this.fieldWidth = parseInt(cascadeBox.clientWidth, 10);
     const isIE = getIEVer() >= 8;
     if (this.fieldWidth % 2 === 1) {
       split.style.width = '5px';
@@ -296,7 +329,14 @@ class DateFormField extends FormField {
             {...others2}
           />,
         );
-        return <div className={'kuma-date-uxform-field-cascade'}>{arr}</div>;
+        return (
+          <div
+            className={'kuma-date-uxform-field-cascade'}
+            ref={(c) => { this.cascadeBox = c; }}
+          >
+            {arr}
+          </div>
+        );
       }
     } else if (mode === Constants.MODE.VIEW) {
       let defaultFormat = 'YYYY-MM-DD';

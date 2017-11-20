@@ -1,5 +1,10 @@
 # history
 
+## 0.8.8
+
+* `FIXED` autoSize logic go wrong if cascade wrapper's width is not equal to fieldCore's width 
+* `CHANGED` `inputBoxMaxWidth`, `mode` & `verticalAlign` change will call the resize
+
 ## 0.8.7
 
 * `CHANGED` add a wrapper for cascade type
