@@ -296,7 +296,7 @@ class DateFormField extends FormField {
             {...others2}
           />,
         );
-        return arr;
+        return <div className={'kuma-date-uxform-field-cascade'}>{arr}</div>;
       }
     } else if (mode === Constants.MODE.VIEW) {
       let defaultFormat = 'YYYY-MM-DD';

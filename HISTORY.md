@@ -1,5 +1,9 @@
 # history
 
+## 0.8.7
+
+* `CHANGED` add a wrapper for cascade type
+
 ## 0.8.6
 
 * `CHANGED` fit React@15
