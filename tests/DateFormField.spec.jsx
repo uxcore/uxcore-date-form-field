@@ -158,6 +158,27 @@ describe('DateFormField', () => {
         done();
       }, 100);
     });
+
+    it('autoMatchWidth in cascade mode', (done) => {
+      const div2 = document.createElement('div');
+      document.body.appendChild(div2);
+      const wrapper = mount(
+        <div style={{ width: '800px' }} className="test-for-auto-match-width">
+          <DateFormField jsxtype="cascade" standalone autoMatchWidth />
+        </div>
+        , {
+          attachTo: div2,
+        });
+      setTimeout(() => {
+        expect(wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth).to.be((800 - 88 - 24 - 26) / 2);
+        wrapper.find('.test-for-auto-match-width').hostNodes().getDOMNode().style.width = '600px';
+        wrapper.find(DateFormField).instance().forceUpdate();
+        expect(wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth).to.be((600 - 88 - 24 - 26) / 2);
+        wrapper.unmount();
+        document.body.removeChild(div2);
+        done();
+      }, 500);
+    });
   });
 
   describe('Event Test', () => {

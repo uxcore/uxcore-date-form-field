@@ -1,5 +1,9 @@
 # history
 
+## 0.8.9
+
+* `FIXED` cascadeBox width change cannot trigger resize when update
+
 ## 0.8.8
 
 * `FIXED` autoSize logic go wrong if cascade wrapper's width is not equal to fieldCore's width 

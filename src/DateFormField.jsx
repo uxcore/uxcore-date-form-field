@@ -105,6 +105,9 @@ class DateFormField extends FormField {
             return true;
           }
         }
+        if (this.fieldWidth && this.fieldWidth !== parseInt(this.cascadeBox.clientWidth, 10)) {
+          return true;
+        }
         return false;
       };
       if (shouldResize()) {
