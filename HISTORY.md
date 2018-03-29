@@ -1,5 +1,9 @@
 # history
 
+## 0.8.10
+
+* `CHANGED` new autoMatchWidth, more reliable
+
 ## 0.8.9
 
 * `FIXED` cascadeBox width change cannot trigger resize when update

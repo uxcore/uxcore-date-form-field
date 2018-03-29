@@ -82,37 +82,6 @@ class DateFormField extends FormField {
     const mode = getMode(this.props);
     if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT) {
       this.resize();
-      this.resizeListenner = addEventListener(window, 'resize', this.resize);
-    }
-  }
-
-  componentWillUnmount() {
-    super.componentWillUnmount();
-    if (this.resizeListenner) {
-      this.resizeListenner.remove();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { jsxtype, autoMatchWidth } = this.props;
-    const mode = getMode(this.props);
-    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT) {
-      const shouldResize = () => {
-        const methods = [getMode, getVerticalAlign, getMaxWidth];
-        for (let i = 0; i < methods.length; i += 1) {
-          const method = methods[i];
-          if (method(this.props) !== method(prevProps)) {
-            return true;
-          }
-        }
-        if (this.fieldWidth && this.fieldWidth !== parseInt(this.cascadeBox.clientWidth, 10)) {
-          return true;
-        }
-        return false;
-      };
-      if (shouldResize()) {
-        this.resize(true);
-      }
     }
   }
 
@@ -127,7 +96,6 @@ class DateFormField extends FormField {
     const calendar2 = this.calendar2.getTriggerNode();
     const split = this.split;
     this.fieldWidth = parseInt(cascadeBox.clientWidth, 10);
-    const isIE = getIEVer() >= 8;
     if (this.fieldWidth % 2 === 1) {
       split.style.width = '5px';
     }
@@ -135,14 +103,8 @@ class DateFormField extends FormField {
     const splitOuterWidth = split.clientWidth
       + parseInt(splitCurrentStyle.marginLeft, 10)
       + parseInt(splitCurrentStyle.marginRight, 10);
-    const calendarWidth = (this.fieldWidth - splitOuterWidth) / 2;
-    // in IE, if the core width has decimal, like 280.95px;
-    // the clientWidth would be 281, and would cause break line if 281 is used
-    if (isIE) {
-      split.style.width = `${parseInt(split.style.width, 10) - 1}px`;
-    }
-    calendar1.style.width = `${calendarWidth}px`;
-    calendar2.style.width = `${calendarWidth}px`;
+    calendar1.style.width = `calc((100% - ${splitOuterWidth}px)/2)`;
+    calendar2.style.width = `calc((100% - ${splitOuterWidth}px)/2)`;
   }
 
 
