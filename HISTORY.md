@@ -1,5 +1,10 @@
 # history
 
+
+## 0.8.11
+
+* `FIXED` more reliable autoMatchWidth if style is loaded later than component
+
 ## 0.8.10
 
 * `CHANGED` new autoMatchWidth, more reliable
