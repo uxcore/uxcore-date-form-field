@@ -101,6 +101,14 @@ class DateFormField extends FormField {
     }
   }
 
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    if (this.resizeTimer) {
+      clearTimeout(this.resizeTimer);
+      this.resizeTimer = null;
+    }
+  }
+
   resize(force) {
     const cascadeBox = this.cascadeBox;
     if (this.fieldWidth
@@ -119,6 +127,12 @@ class DateFormField extends FormField {
     const splitOuterWidth = split.clientWidth
       + parseInt(splitCurrentStyle.marginLeft, 10)
       + parseInt(splitCurrentStyle.marginRight, 10);
+    if (!splitOuterWidth) {
+      // if style is loaded later than component
+      this.resizeTimer = setTimeout(() => {
+        this.resize();
+      }, 500);
+    }
     calendar1.style.width = `calc((100% - ${splitOuterWidth}px)/2)`;
     calendar2.style.width = `calc((100% - ${splitOuterWidth}px)/2)`;
   }
