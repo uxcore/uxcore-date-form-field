@@ -1,6 +1,10 @@
 # history
 
 
+## 0.8.13
+
+* `CHANGED` spliter style change 
+
 ## 0.8.11
 
 * `FIXED` more reliable autoMatchWidth if style is loaded later than component

@@ -305,7 +305,7 @@ class DateFormField extends FormField {
             {...others1}
           />,
         );
-        arr.push(<span style={{ width: '6px' }} key="split" ref={me.saveRef('split')} className="kuma-uxform-split">-</span>);
+        arr.push(<span style={{ width: '8px', borderBottom: '1px solid rgba(31,56,88,0.20)' }} key="split" ref={me.saveRef('split')} className="kuma-uxform-split" />);
 
         arr.push(
           <Panel
