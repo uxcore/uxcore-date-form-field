@@ -1,6 +1,12 @@
 # history
 
 
+## 0.9.0
+
+* `CHANGED` upgrade `uxcore-form-field` to `^0.3.0`
+* `CHANGED` upgrade `uxcore-calendar` to `^0.10.0`
+* `CHANGED` adapt React 16
+
 ## 0.8.13
 
 * `CHANGED` spliter style change 

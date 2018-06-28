@@ -2,7 +2,7 @@ import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Adapter from 'enzyme-adapter-react-16';
 import Form from 'uxcore-form/build/Form';
 import Constants from 'uxcore-const';
 import $ from 'jquery';
@@ -67,7 +67,6 @@ describe('DateFormField', () => {
       const w = mount(createDateField({ jsxtype: 'cascade', autoMatchWidth: true }));
       const d = w.find(DateFormField);
       expect(d.prop('autoMatchWidth')).to.be(true);
-      expect(d.instance().resizeListenner.remove).to.be.a('function');
     });
 
     it('render showtime date form field', (done) => {
@@ -102,8 +101,8 @@ describe('DateFormField', () => {
         jsxlabel: 'date2333',
         jsxmode: Constants.MODE.VIEW,
       }, {
-        date: '2012-11-12',
-      }), document.getElementById('test-demo'));
+          date: '2012-11-12',
+        }), document.getElementById('test-demo'));
       setTimeout(() => {
         expect($('.kuma-input').length).to.be(0);
         expect($('.kuma-uxform-field-core span').text())
@@ -119,8 +118,8 @@ describe('DateFormField', () => {
         jsxmode: Constants.MODE.VIEW,
         showTime: true,
       }, {
-        date: '2012-11-12',
-      }), document.getElementById('test-demo'));
+          date: '2012-11-12',
+        }), document.getElementById('test-demo'));
       setTimeout(() => {
         expect($('.kuma-input').length).to.be(0);
         expect($('.kuma-uxform-field-core span').text())
@@ -149,8 +148,8 @@ describe('DateFormField', () => {
         jsxmode: Constants.MODE.VIEW,
         jsxtype: 'cascade',
       }, {
-        date: ['2012-11-12', '2012-12-12'],
-      }), document.getElementById('test-demo'));
+          date: ['2012-11-12', '2012-12-12'],
+        }), document.getElementById('test-demo'));
       setTimeout(() => {
         expect($('.kuma-input').length).to.be(0);
         expect($('.kuma-uxform-field-core span').text())
@@ -170,12 +169,15 @@ describe('DateFormField', () => {
           attachTo: div2,
         });
       setTimeout(() => {
-        expect(wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth).to.be((800 - 88 - 24 - 26) / 2);
-        wrapper.find('.test-for-auto-match-width').hostNodes().getDOMNode().style.width = '600px';
-        wrapper.find(DateFormField).instance().forceUpdate();
-        expect(wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth).to.be((600 - 88 - 24 - 26) / 2);
-        wrapper.unmount();
-        document.body.removeChild(div2);
+        const inputWidth1 = wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth;
+        const inputWidth2 = wrapper.find('input.kuma-input').at(1).getDOMNode().offsetWidth;
+        const split = wrapper.find('.kuma-uxform-split').getDOMNode();
+        const splitStyle = split.currentStyle || window.getComputedStyle(split);
+        const splitOuterWidth = split.clientWidth
+          + parseInt(splitStyle.marginLeft, 10)
+          + parseInt(splitStyle.marginRight, 10);
+        const containWidth = wrapper.find('.kuma-date-uxform-field-cascade').getDOMNode().offsetWidth;
+        expect(inputWidth1 + inputWidth2 + splitOuterWidth).to.be(containWidth);
         done();
       }, 500);
     });
@@ -223,7 +225,7 @@ describe('DateFormField', () => {
         jsxlabel: 'date2333',
         jsxtype: 'cascade',
       }),
-      document.getElementById('test-demo'));
+        document.getElementById('test-demo'));
       setTimeout(() => {
         $('.kuma-uxform-field input').click();
         setTimeout(() => {
