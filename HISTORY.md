@@ -1,6 +1,10 @@
 # history
 
 
+## 0.9.1
+
+* `FIXED` autoMatchWidth fails to work if jsxshow is changed from false to true
+
 ## 0.9.0
 
 * `CHANGED` upgrade `uxcore-form-field` to `^0.3.0`

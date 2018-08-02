@@ -48,19 +48,26 @@ class DateFormField extends FormField {
 
   componentDidMount() {
     super.componentDidMount();
-    const { jsxtype, autoMatchWidth } = this.props;
+    const { jsxtype, autoMatchWidth, jsxshow } = this.props;
     const mode = getMode(this.props);
-    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT) {
+    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT && jsxshow) {
       this.resize();
     }
   }
 
-  componentDidUpdate(...args) {
-    super.componentDidUpdate(...args);
-    const { jsxtype, autoMatchWidth } = this.props;
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    super.componentDidUpdate(prevProps, prevState, snapshot);
+    const { jsxtype, autoMatchWidth, jsxshow } = this.props;
     const mode = getMode(this.props);
-    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT) {
+    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT && jsxshow) {
       const shouldResize = () => {
+        if (!prevProps.jsxshow) {
+          return true;
+        }
+        const prevMode = getMode(prevProps);
+        if (mode !== prevMode) {
+          return true;
+        }
         if (this.fieldWidth && this.fieldWidth !== parseInt(this.cascadeBox.clientWidth, 10)) {
           return true;
         }
@@ -81,7 +88,7 @@ class DateFormField extends FormField {
   }
 
   resize(force) {
-    const cascadeBox = this.cascadeBox;
+    const { cascadeBox } = this;
     if (this.fieldWidth
       && this.fieldWidth === parseInt(cascadeBox.clientWidth, 10)
       && force !== true) {
@@ -89,7 +96,7 @@ class DateFormField extends FormField {
     }
     const calendar1 = this.calendar1.getTriggerNode();
     const calendar2 = this.calendar2.getTriggerNode();
-    const split = this.split;
+    const { split } = this;
     this.fieldWidth = parseInt(cascadeBox.clientWidth, 10);
     if (this.fieldWidth % 2 === 1) {
       split.style.width = '5px';
@@ -226,7 +233,7 @@ class DateFormField extends FormField {
             {...others}
           />
         );
-      } else if (jsxtype === 'cascade') {
+      } if (jsxtype === 'cascade') {
         const arr = [];
         let others1;
         let others2;
@@ -297,7 +304,7 @@ class DateFormField extends FormField {
         );
         return (
           <div
-            className={'kuma-date-uxform-field-cascade'}
+            className="kuma-date-uxform-field-cascade"
             ref={(c) => { this.cascadeBox = c; }}
           >
             {arr}
@@ -316,7 +323,11 @@ class DateFormField extends FormField {
         defaultFormat = 'YYYY';
       }
       if (jsxtype === 'single') {
-        return <span>{getViewText(me.state.value, (me.props.format || defaultFormat))}</span>;
+        return (
+          <span>
+            {getViewText(me.state.value, (me.props.format || defaultFormat))}
+          </span>
+        );
       }
       return (
         <span>

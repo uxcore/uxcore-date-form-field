@@ -15,18 +15,19 @@ import DateFormField from '../src';
 
 
 class Demo extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       mode: Const.MODE.EDIT,
+      jsxshow: true,
     };
   }
 
   handleModeChange() {
     const me = this;
     me.setState({
-      mode: me.state.mode === Const.MODE.EDIT ? Const.MODE.VIEW : Const.MODE.EDIT,
+      // mode: me.state.mode === Const.MODE.EDIT ? Const.MODE.VIEW : Const.MODE.EDIT,
+      jsxshow: !this.state.jsxshow,
     });
   }
 
@@ -41,7 +42,7 @@ class Demo extends React.Component {
       <div>
         <Form
           className="testWidth"
-          jsxmode={me.state.mode}
+          // jsxmode={me.state.mode}
           ref={(c) => { me.form = c; return false; }}
           jsxvalues={{
             casDate: ['2016-01-02', '2016-02-03'],
@@ -59,6 +60,7 @@ class Demo extends React.Component {
           <DateFormField
             jsxtype="cascade"
             autoMatchWidth
+            jsxshow={this.state.jsxshow}
             useFormat
             format="yyyy-MM-dd"
             jsxfrom="2016-11-24"
@@ -75,8 +77,12 @@ class Demo extends React.Component {
             showDateInput
           />
         </Form>
-        <Button onClick={me.handleModeChange.bind(me)}>切换模式</Button>
-        <Button onClick={me.handleValueGet.bind(me)}>获取数据</Button>
+        <Button onClick={me.handleModeChange.bind(me)}>
+切换模式
+                </Button>
+        <Button onClick={me.handleValueGet.bind(me)}>
+获取数据
+                </Button>
       </div>
     );
   }
