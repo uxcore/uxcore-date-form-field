@@ -1,6 +1,10 @@
 # history
 
 
+## 0.9.2
+
+* `FIXED` resize should be called if panel is changed
+
 ## 0.9.1
 
 * `FIXED` autoMatchWidth fails to work if jsxshow is changed from false to true
