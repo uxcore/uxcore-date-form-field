@@ -57,7 +57,9 @@ class DateFormField extends FormField {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     super.componentDidUpdate(prevProps, prevState, snapshot);
-    const { jsxtype, autoMatchWidth, jsxshow } = this.props;
+    const {
+      jsxtype, autoMatchWidth, jsxshow, panel,
+    } = this.props;
     const mode = getMode(this.props);
     if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT && jsxshow) {
       const shouldResize = () => {
@@ -66,6 +68,9 @@ class DateFormField extends FormField {
         }
         const prevMode = getMode(prevProps);
         if (mode !== prevMode) {
+          return true;
+        }
+        if (panel !== prevProps.panel) {
           return true;
         }
         if (this.fieldWidth && this.fieldWidth !== parseInt(this.cascadeBox.clientWidth, 10)) {

@@ -78,11 +78,14 @@ class Demo extends React.Component {
           />
         </Form>
         <Button onClick={me.handleModeChange.bind(me)}>
-切换模式
-                </Button>
+          切换模式
+        </Button>
         <Button onClick={me.handleValueGet.bind(me)}>
-获取数据
-                </Button>
+          获取数据
+        </Button>
+        <Button onClick={() => { this.forceUpdate(); }}>
+          强制渲染
+        </Button>
       </div>
     );
   }
