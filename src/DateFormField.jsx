@@ -85,11 +85,23 @@ class DateFormField extends FormField {
     }
   }
 
-  componentDidUpdate() {
-    const { jsxtype, autoMatchWidth } = this.props;
+  componentDidUpdate(prevProps) {
+    const {
+      jsxtype, autoMatchWidth, jsxshow, panel,
+    } = this.props;
     const mode = getMode(this.props);
-    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT) {
+    if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT && jsxshow) {
       const shouldResize = () => {
+        if (!prevProps.jsxshow) {
+          return true;
+        }
+        const prevMode = getMode(prevProps);
+        if (mode !== prevMode) {
+          return true;
+        }
+        if (panel !== prevProps.panel) {
+          return true;
+        }
         if (this.fieldWidth && this.fieldWidth !== parseInt(this.cascadeBox.clientWidth, 10)) {
           return true;
         }
@@ -255,7 +267,7 @@ class DateFormField extends FormField {
             {...others}
           />
         );
-      } else if (jsxtype === 'cascade') {
+      } if (jsxtype === 'cascade') {
         const arr = [];
         let others1;
         let others2;
@@ -326,7 +338,7 @@ class DateFormField extends FormField {
         );
         return (
           <div
-            className={'kuma-date-uxform-field-cascade'}
+            className="kuma-date-uxform-field-cascade"
             ref={(c) => { this.cascadeBox = c; }}
           >
             {arr}
@@ -345,7 +357,11 @@ class DateFormField extends FormField {
         defaultFormat = 'YYYY';
       }
       if (jsxtype === 'single') {
-        return <span>{getViewText(me.state.value, (me.props.format || defaultFormat))}</span>;
+        return (
+          <span>
+            {getViewText(me.state.value, (me.props.format || defaultFormat))}
+                    </span>
+        );
       }
       return (
         <span>
