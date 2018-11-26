@@ -12,7 +12,6 @@ import FormField from 'uxcore-form-field';
 import Constants from 'uxcore-const';
 import Calendar from 'uxcore-calendar';
 import assign from 'object-assign';
-import deepcopy from 'lodash/cloneDeep';
 import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
 import Formatter from 'uxcore-formatter';
@@ -48,7 +47,7 @@ class DateFormField extends FormField {
 
   componentDidMount() {
     super.componentDidMount();
-    const { jsxtype, autoMatchWidth, jsxshow } = this.props;
+    const {jsxtype, autoMatchWidth, jsxshow} = this.props;
     const mode = getMode(this.props);
     if (jsxtype === 'cascade' && autoMatchWidth && mode === Constants.MODE.EDIT && jsxshow) {
       this.resize();
@@ -93,7 +92,7 @@ class DateFormField extends FormField {
   }
 
   resize(force) {
-    const { cascadeBox } = this;
+    const {cascadeBox} = this;
     if (this.fieldWidth
       && this.fieldWidth === parseInt(cascadeBox.clientWidth, 10)
       && force !== true) {
@@ -101,7 +100,7 @@ class DateFormField extends FormField {
     }
     const calendar1 = this.calendar1.getTriggerNode();
     const calendar2 = this.calendar2.getTriggerNode();
-    const { split } = this;
+    const {split} = this;
     this.fieldWidth = parseInt(cascadeBox.clientWidth, 10);
     if (this.fieldWidth % 2 === 1) {
       split.style.width = '5px';
@@ -130,7 +129,7 @@ class DateFormField extends FormField {
 
   handleChange(value, format) {
     const me = this;
-    const { useFormat } = me.props;
+    const {useFormat} = me.props;
     let data;
     if (useFormat) {
       data = format;
@@ -142,8 +141,8 @@ class DateFormField extends FormField {
 
   handleCascadeChange(i, value, format) {
     const me = this;
-    const values = deepcopy(me.state.value) || [];
-    const { useFormat } = me.props;
+    const {useFormat, useStartEnd} = me.props;
+    const values = me.metadataAdapter(me.state.value, useStartEnd) || [];
     let data;
     if (useFormat) {
       data = format;
@@ -163,7 +162,7 @@ class DateFormField extends FormField {
         values[0] = undefined;
       }
     }
-    me.handleDataChange(values);
+    me.handleDataChange(!useStartEnd ? values : me.metadataAdapter(values, useStartEnd, true));
   }
 
   addSpecificClass() {
@@ -182,7 +181,7 @@ class DateFormField extends FormField {
     // if showTime is true or timePicker is set, we use time to compare
     // otherwise we use day to compare
     const me = this;
-    const { showTime, timePicker } = me.props;
+    const {showTime, timePicker} = me.props;
     if (showTime || timePicker) {
       return new Date(time).getTime();
     }
@@ -196,6 +195,24 @@ class DateFormField extends FormField {
     // return new Date(Formatter.date(time, 'YYYY-MM-DD')).getTime();
   }
 
+  metadataAdapter(value, isMetadata, reversion) {
+    if (!value) {
+      return null
+    }
+    if (!isMetadata) {
+      return value
+    }
+    return !reversion
+      ? [
+        value.start || value.startDate,
+        value.end || value.endDate
+      ]
+      : {
+        start: value[0],
+        end: value[1]
+      }
+  }
+
   renderField() {
     const me = this;
     const {
@@ -204,6 +221,7 @@ class DateFormField extends FormField {
       jsxto,
       disabledDate,
       panel,
+      useStartEnd,
       ...others
     } = me.props;
 
@@ -238,7 +256,8 @@ class DateFormField extends FormField {
             {...others}
           />
         );
-      } if (jsxtype === 'cascade') {
+      }
+      if (jsxtype === 'cascade') {
         const arr = [];
         let others1;
         let others2;
@@ -255,18 +274,21 @@ class DateFormField extends FormField {
           format: getPropFromArray(others.format, 1),
           disabledDate: getPropFromArray(disabledDate, 1),
         };
-        if (me.state.value && me.state.value[0]) {
+
+        let values = me.metadataAdapter(me.state.value, useStartEnd);
+
+        if (values && values[0]) {
           others1 = assign({}, others, {
-            value: me.state.value[0],
+            value: values[0],
           }, omitBy(propsFromArray1, isNil));
         } else {
           others1 = assign({}, others, {
             value: null,
           }, omitBy(propsFromArray1, isNil));
         }
-        if (me.state.value && me.state.value[1]) {
+        if (values && values[1]) {
           others2 = assign({}, others, {
-            value: me.state.value[1],
+            value: values[1],
           }, omitBy(propsFromArray2, isNil));
         } else {
           others2 = assign({}, others, {
@@ -288,7 +310,8 @@ class DateFormField extends FormField {
             {...others1}
           />,
         );
-        arr.push(<span style={{ width: '8px', borderBottom: '1px solid rgba(31,56,88,0.20)' }} key="split" ref={me.saveRef('split')} className="kuma-uxform-split" />);
+        arr.push(<span style={{width: '8px', borderBottom: '1px solid rgba(31,56,88,0.20)'}} key="split"
+                       ref={me.saveRef('split')} className="kuma-uxform-split"/>);
 
         arr.push(
           <Panel
@@ -300,7 +323,7 @@ class DateFormField extends FormField {
                 return false;
               }
               const now = me.processTime(current.getTime());
-              let first = me.state.value ? me.state.value[0] : 0;
+              let first = values ? values[0] : 0;
               first = me.processTime(first);
               return (now < from || now > to || now < first);
             }}
@@ -310,7 +333,9 @@ class DateFormField extends FormField {
         return (
           <div
             className="kuma-date-uxform-field-cascade"
-            ref={(c) => { this.cascadeBox = c; }}
+            ref={(c) => {
+              this.cascadeBox = c;
+            }}
           >
             {arr}
           </div>
@@ -334,11 +359,14 @@ class DateFormField extends FormField {
           </span>
         );
       }
+      let values = me.metadataAdapter(me.state.value, useStartEnd) || [];
       return (
         <span>
-          {me.state.value instanceof Array ? me.state.value
-            .map(item => getViewText(item, (me.props.format || defaultFormat)))
-            .join(' - ') : me.state.value}
+          {
+            values instanceof Array
+              ? values.map(item => getViewText(item, (me.props.format || defaultFormat))).join(' - ')
+              : values
+          }
         </span>
       );
     }

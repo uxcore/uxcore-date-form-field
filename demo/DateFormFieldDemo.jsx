@@ -26,7 +26,7 @@ class Demo extends React.Component {
   handleModeChange() {
     const me = this;
     me.setState({
-      // mode: me.state.mode === Const.MODE.EDIT ? Const.MODE.VIEW : Const.MODE.EDIT,
+      mode: me.state.mode === Const.MODE.EDIT ? Const.MODE.VIEW : Const.MODE.EDIT,
       jsxshow: !this.state.jsxshow,
     });
   }
@@ -42,10 +42,15 @@ class Demo extends React.Component {
       <div>
         <Form
           className="testWidth"
-          // jsxmode={me.state.mode}
+          jsxmode={me.state.mode}
           ref={(c) => { me.form = c; return false; }}
           jsxvalues={{
-            casDate: ['2016-01-02', '2016-02-03'],
+            date: '2018-01-12',
+            casDate: ['2016-01-02', '2017-02-03'],
+            casMetaDate: {
+              start: '2016-01-11',
+              end: '2016-02-12'
+            }
           }}
         >
           <DateFormField
@@ -66,6 +71,16 @@ class Demo extends React.Component {
             jsxfrom="2016-11-24"
             jsxname="format"
             jsxlabel="useFormat"
+            locale="zh-cn"
+          />
+          <DateFormField
+            jsxtype="cascade"
+            jsxname="casMetaDate"
+            useFormat
+            jsxmod={this.state.mode}
+            format="yyyy-MM-dd"
+            jsxlabel="元数据格式"
+            useStartEnd={true}
             locale="zh-cn"
           />
           <DateFormField
