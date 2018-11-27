@@ -43,7 +43,10 @@ class Demo extends React.Component {
         <Form
           className="testWidth"
           jsxmode={me.state.mode}
-          ref={(c) => { me.form = c; return false; }}
+          ref={(c) => {
+            me.form = c;
+            return false;
+          }}
           jsxvalues={{
             date: '2018-01-12',
             casDate: ['2016-01-02', '2017-02-03'],
@@ -76,8 +79,8 @@ class Demo extends React.Component {
           <DateFormField
             jsxtype="cascade"
             jsxname="casMetaDate"
-            useFormat
             jsxmod={this.state.mode}
+            useFormat
             format="yyyy-MM-dd"
             jsxlabel="元数据格式"
             useStartEnd={true}
