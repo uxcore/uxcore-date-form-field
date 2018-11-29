@@ -12,7 +12,6 @@ import FormField from 'uxcore-form-field';
 import Constants from 'uxcore-const';
 import Calendar from 'uxcore-calendar';
 import assign from 'object-assign';
-import deepcopy from 'lodash/cloneDeep';
 import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
 import Formatter from 'uxcore-formatter';
@@ -142,7 +141,9 @@ class DateFormField extends FormField {
 
   handleCascadeChange(i, value, format) {
     const me = this;
-    const values = deepcopy(me.state.value) || [];
+    const values = [
+      ...(this.formatValue(me.state.value) || [])
+    ];
     const { useFormat } = me.props;
     let data;
     if (useFormat) {
@@ -163,7 +164,7 @@ class DateFormField extends FormField {
         values[0] = undefined;
       }
     }
-    me.handleDataChange(values);
+    me.handleDataChange(this.reverseFormatValue(values));
   }
 
   addSpecificClass() {
@@ -194,6 +195,34 @@ class DateFormField extends FormField {
     return newTime.getTime();
     // new Date(dateString) will parse time as UTC+0!
     // return new Date(Formatter.date(time, 'YYYY-MM-DD')).getTime();
+  }
+
+  formatValue(value) {
+    const { useStartEnd } = this.props;
+    return DateFormField.metadataAdapter(value, useStartEnd)
+  }
+
+  reverseFormatValue(value) {
+    const { useStartEnd } = this.props;
+    return DateFormField.metadataAdapter(value, useStartEnd, true)
+  }
+
+  static metadataAdapter(value, useStartEnd, reversion) {
+    if (!value) {
+      return null
+    }
+    if (!useStartEnd) {
+      return value
+    }
+    return !reversion
+      ? [
+        value.start || value.startDate,
+        value.end || value.endDate
+      ]
+      : {
+        start: value[0],
+        end: value[1]
+      }
   }
 
   renderField() {
@@ -238,7 +267,8 @@ class DateFormField extends FormField {
             {...others}
           />
         );
-      } if (jsxtype === 'cascade') {
+      }
+      if (jsxtype === 'cascade') {
         const arr = [];
         let others1;
         let others2;
@@ -255,18 +285,21 @@ class DateFormField extends FormField {
           format: getPropFromArray(others.format, 1),
           disabledDate: getPropFromArray(disabledDate, 1),
         };
-        if (me.state.value && me.state.value[0]) {
+
+        const formatValue = me.formatValue(me.state.value);
+
+        if (formatValue && formatValue[0]) {
           others1 = assign({}, others, {
-            value: me.state.value[0],
+            value: formatValue[0],
           }, omitBy(propsFromArray1, isNil));
         } else {
           others1 = assign({}, others, {
             value: null,
           }, omitBy(propsFromArray1, isNil));
         }
-        if (me.state.value && me.state.value[1]) {
+        if (formatValue && formatValue[1]) {
           others2 = assign({}, others, {
-            value: me.state.value[1],
+            value: formatValue[1],
           }, omitBy(propsFromArray2, isNil));
         } else {
           others2 = assign({}, others, {
@@ -288,7 +321,8 @@ class DateFormField extends FormField {
             {...others1}
           />,
         );
-        arr.push(<span style={{ width: '8px', borderBottom: '1px solid rgba(31,56,88,0.20)' }} key="split" ref={me.saveRef('split')} className="kuma-uxform-split" />);
+        arr.push(<span style={{ width: '8px', borderBottom: '1px solid rgba(31,56,88,0.20)' }} key="split"
+                       ref={me.saveRef('split')} className="kuma-uxform-split"/>);
 
         arr.push(
           <Panel
@@ -300,7 +334,7 @@ class DateFormField extends FormField {
                 return false;
               }
               const now = me.processTime(current.getTime());
-              let first = me.state.value ? me.state.value[0] : 0;
+              let first = formatValue ? formatValue[0] : 0;
               first = me.processTime(first);
               return (now < from || now > to || now < first);
             }}
@@ -334,11 +368,15 @@ class DateFormField extends FormField {
           </span>
         );
       }
+      const formatValue = me.formatValue(me.state.value);
+
       return (
         <span>
-          {me.state.value instanceof Array ? me.state.value
-            .map(item => getViewText(item, (me.props.format || defaultFormat)))
-            .join(' - ') : me.state.value}
+          {
+            formatValue instanceof Array
+              ? formatValue.map(item => getViewText(item, (me.props.format || defaultFormat))).join(' - ')
+              : formatValue
+          }
         </span>
       );
     }
