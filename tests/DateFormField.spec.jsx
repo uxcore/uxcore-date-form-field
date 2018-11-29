@@ -1,14 +1,14 @@
 import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, {mount} from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Form from 'uxcore-form/build/Form';
 import Constants from 'uxcore-const';
 import $ from 'jquery';
 import DateFormField from '../src';
 
-Enzyme.configure({adapter: new Adapter()});
+Enzyme.configure({ adapter: new Adapter() });
 
 const createDateField = (options = {}, values = {}) => {
   const opts = {
@@ -21,7 +21,7 @@ const createDateField = (options = {}, values = {}) => {
   };
   return (
     <Form jsxvalues={values}>
-      {React.createElement(DateFormField, {...opts, ...options})}
+      {React.createElement(DateFormField, { ...opts, ...options })}
     </Form>
   );
 };
@@ -53,7 +53,7 @@ describe('DateFormField', () => {
 
   describe('Render Field Test', () => {
     it('render cascade date form field', (done) => {
-      const w = mount(createDateField({jsxtype: 'cascade'}));
+      const w = mount(createDateField({ jsxtype: 'cascade' }));
       expect(w.find(DateFormField).prop('jsxtype')).to.be('cascade');
       ReactDOM.render(createDateField(), document.getElementById('test-demo'));
       setTimeout(() => {
@@ -63,15 +63,15 @@ describe('DateFormField', () => {
     });
 
     it('render autoMatchWidth date form field', () => {
-      const w = mount(createDateField({jsxtype: 'cascade', autoMatchWidth: true}));
+      const w = mount(createDateField({ jsxtype: 'cascade', autoMatchWidth: true }));
       const d = w.find(DateFormField);
       expect(d.prop('autoMatchWidth')).to.be(true);
     });
 
     it('render showtime date form field', (done) => {
-      const w = mount(createDateField({jsxtype: 'cascade', showtime: true}));
+      const w = mount(createDateField({ jsxtype: 'cascade', showtime: true }));
       expect(w.find(DateFormField).prop('showtime')).to.be(true);
-      ReactDOM.render(createDateField({jsxtype: 'cascade', showtime: true}), document.getElementById('test-demo'));
+      ReactDOM.render(createDateField({ jsxtype: 'cascade', showtime: true }), document.getElementById('test-demo'));
       setTimeout(() => {
         expect($('.kuma-calendar-picker-input').length).to.be(2);
         done();
@@ -79,9 +79,9 @@ describe('DateFormField', () => {
     });
 
     it('render jsxlabel with date form field', (done) => {
-      const w = mount(createDateField({jsxlabel: 'date2333'}));
+      const w = mount(createDateField({ jsxlabel: 'date2333' }));
       expect(w.find(DateFormField).prop('jsxlabel')).to.be('date2333');
-      ReactDOM.render(createDateField({jsxlabel: 'date2333'}), document.getElementById('test-demo'));
+      ReactDOM.render(createDateField({ jsxlabel: 'date2333' }), document.getElementById('test-demo'));
       setTimeout(() => {
         expect($('.kuma-uxform-field .label-content').text()).to.be('date2333');
         done();
@@ -89,7 +89,7 @@ describe('DateFormField', () => {
     });
 
     it('render date form field with different formatter', () => {
-      const w = mount(createDateField({jsxtype: 'cascade', format: 'yyyy'}));
+      const w = mount(createDateField({ jsxtype: 'cascade', format: 'yyyy' }));
       expect(w.find(DateFormField).prop('format')).to.be('yyyy');
       w.unmount();
     });
@@ -218,7 +218,7 @@ describe('DateFormField', () => {
       const div2 = document.createElement('div');
       document.body.appendChild(div2);
       const wrapper = mount(
-        <div style={{width: '800px'}} className="test-for-auto-match-width">
+        <div style={{ width: '800px' }} className="test-for-auto-match-width">
           <DateFormField jsxtype="cascade" standalone autoMatchWidth/>
         </div>
         , {
@@ -241,7 +241,7 @@ describe('DateFormField', () => {
 
   describe('Event Test', () => {
     it('single date form field support onClick and onChange event to show picker panel', (done) => {
-      ReactDOM.render(createDateField({jsxlabel: 'date2333'}), document.getElementById('test-demo'));
+      ReactDOM.render(createDateField({ jsxlabel: 'date2333' }), document.getElementById('test-demo'));
       setTimeout(() => {
         $('.kuma-uxform-field input').click();
         setTimeout(() => {
