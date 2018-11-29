@@ -1,5 +1,6 @@
 # history
-
+## 0.9.3
+* `NEW` add metadata support
 
 ## 0.9.2
 
