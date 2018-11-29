@@ -43,7 +43,6 @@ class DateFormField extends FormField {
   constructor(props) {
     super(props);
     this.resize = this.resize.bind(this);
-    this.state.formatValue = this.formatValue(this.state.value);
   }
 
   componentDidMount() {
@@ -143,7 +142,7 @@ class DateFormField extends FormField {
   handleCascadeChange(i, value, format) {
     const me = this;
     const values = [
-      ...(me.state.formatValue || [])
+      ...(this.formatValue(me.state.value) || [])
     ];
     const { useFormat } = me.props;
     let data;
@@ -228,7 +227,6 @@ class DateFormField extends FormField {
 
   renderField() {
     const me = this;
-    const { formatValue } = me.state;
     const {
       jsxtype,
       jsxfrom,
@@ -287,6 +285,8 @@ class DateFormField extends FormField {
           format: getPropFromArray(others.format, 1),
           disabledDate: getPropFromArray(disabledDate, 1),
         };
+
+        const formatValue = me.formatValue(me.state.value);
 
         if (formatValue && formatValue[0]) {
           others1 = assign({}, others, {
@@ -368,6 +368,8 @@ class DateFormField extends FormField {
           </span>
         );
       }
+      const formatValue = me.formatValue(me.state.value);
+
       return (
         <span>
           {
