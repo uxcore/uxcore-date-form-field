@@ -83,8 +83,8 @@ class Demo extends React.Component {
             useFormat
             format="yyyy-MM-dd"
             jsxlabel="元数据格式"
-            useStartEnd={false}
-            dateRanges={[
+            useStartEnd={true}
+            quickSelectRanges={[
               {
                 text: '本周',
                 value: {

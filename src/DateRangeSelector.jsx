@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import Button from 'uxcore-button'
 
 class DateRangeSelector extends React.Component{
   static defaultProps = {
@@ -17,18 +17,18 @@ class DateRangeSelector extends React.Component{
   };
 
   render() {
-    const { dateRanges, prefixCls } = this.props;
+    const { dateRanges } = this.props;
     return (
       dateRanges.map(range => {
         const { text, value } = range;
         return (
-          <span
-            className={`${prefixCls}-range-selector`}
+          <Button
+            size={'small'}
             onClick={() => this.onSelectHandle(value.start, value.end)}
             key={text}
           >
             {text}
-          </span>
+          </Button>
         )
       })
     )

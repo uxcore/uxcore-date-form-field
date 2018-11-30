@@ -15,7 +15,9 @@ import assign from 'object-assign';
 import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
 import Formatter from 'uxcore-formatter';
-import createSelector from './createSelector'
+import DateRangeSelector from "./DateRangeSelector";
+import HoverOmit from "./HoverOmit";
+import Tooltip from 'uxcore-tooltip'
 
 const CalendarPanel = {
   month: Calendar.MonthCalendar,
@@ -166,6 +168,9 @@ class DateFormField extends FormField {
       }
     }
     me.handleDataChange(this.reverseFormatValue(values));
+    // const { toolTip1 } = this.refs;
+    // const toolTip = toolTip1.getPopupDomNode();
+    // toolTip.classList.add('kuma-tooltip-hidden');
   }
 
   handleCascadeSelect = (start, end) => {
@@ -280,6 +285,7 @@ class DateFormField extends FormField {
         const arr = [];
         let others1;
         let others2;
+        const { quickSelectRanges } = me.props;
         const propsFromArray1 = {
           disabled: getPropFromArray(others.disabled, 0),
           placeholder: getPropFromArray(others.placeholder, 0),
@@ -345,12 +351,20 @@ class DateFormField extends FormField {
           {...others2}
         />;
         arr.push(
-          me.props.dateRanges.length ? createSelector(
-            Calendar1,
-            me.props.dateRanges,
-            me.handleCascadeSelect.bind(me),
-            'tip1'
-          ) : Calendar1
+          quickSelectRanges.length
+            ? <Tooltip overlayStyle={{marginTop: '20px'}} overlayClassName={'date-quick-range'} ref={'toolTip1'} key={'tip1'} mouseEnterDelay={0.3} trigger={['hover', 'click']} overlay={() => {
+              return (
+                <DateRangeSelector
+                  dateRanges={ quickSelectRanges }
+                  onSelect={ me.handleCascadeSelect }
+                />
+              )
+            }} placement="bottomLeft">
+              <HoverOmit>
+                {Calendar1}
+              </HoverOmit>
+            </Tooltip>
+            : Calendar1
         );
         arr.push(
           <span
@@ -361,12 +375,20 @@ class DateFormField extends FormField {
           />
         );
         arr.push(
-          me.props.dateRanges.length ? createSelector(
-            Calendar2,
-            me.props.dateRanges,
-            me.handleCascadeSelect.bind(me),
-            'tip2'
-          ) : Calendar2
+          quickSelectRanges.length
+              ? <Tooltip ref={'toolTip2'} key={'tip2'} mouseEnterDelay={0.3} trigger={['hover', 'click']} overlay={() => {
+                  return (
+                    <DateRangeSelector
+                      dateRanges={ quickSelectRanges }
+                      onSelect={ me.handleCascadeSelect }
+                    />
+                  )
+                }} placement="bottom">
+                  <HoverOmit>
+                    {Calendar2}
+                  </HoverOmit>
+                </Tooltip>
+              : Calendar2
         );
         return (
           <div
@@ -420,7 +442,7 @@ DateFormField.propTypes = assign(FormField.propTypes, {
   panel: PropTypes.string,
   useFormat: PropTypes.bool,
   autoMatchWidth: PropTypes.bool,
-  dateRanges: PropTypes.array
+  quickSelectRanges: PropTypes.array
 });
 DateFormField.defaultProps = assign(FormField.defaultProps, {
   locale: 'zh-cn',
@@ -429,6 +451,6 @@ DateFormField.defaultProps = assign(FormField.defaultProps, {
   autoMatchWidth: false,
   panel: 'day',
   useFormat: false,
-  dateRanges: []
+  quickSelectRanges: []
 });
 export default DateFormField;
