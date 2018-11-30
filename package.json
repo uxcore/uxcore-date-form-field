@@ -51,6 +51,7 @@
     "classnames": "^2.1.2",
     "lodash": "^4.16.4",
     "object-assign": "^4.0.0",
+    "object.omit": "^3.0.0",
     "prop-types": "15.x",
     "rc-util": "^4.0.2",
     "uxcore-calendar": "^0.10.0",

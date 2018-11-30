@@ -15,6 +15,7 @@ import assign from 'object-assign';
 import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
 import Formatter from 'uxcore-formatter';
+import createSelector from './createSelector'
 
 const CalendarPanel = {
   month: Calendar.MonthCalendar,
@@ -167,6 +168,13 @@ class DateFormField extends FormField {
     me.handleDataChange(this.reverseFormatValue(values));
   }
 
+  handleCascadeSelect = (start, end) => {
+    this.handleCascadeChange(0, new Date(start), start);
+    setTimeout(() => {
+      this.handleCascadeChange(1, new Date(end), end)
+    })
+  };
+
   addSpecificClass() {
     const me = this;
     if (me.props.jsxprefixCls === 'kuma-uxform-field') {
@@ -306,45 +314,66 @@ class DateFormField extends FormField {
             value: null,
           }, omitBy(propsFromArray2, isNil));
         }
-        arr.push(
-          <Panel
-            key="calendar1"
-            ref={me.saveRef('calendar1')}
-            onSelect={me.handleCascadeChange.bind(me, 0)}
-            disabledDate={(current) => {
-              if (!current) {
-                return false;
-              }
-              const now = me.processTime(current.getTime());
-              return (now < from || now > to);
-            }}
-            {...others1}
-          />,
-        );
-        arr.push(<span style={{ width: '8px', borderBottom: '1px solid rgba(31,56,88,0.20)' }} key="split"
-                       ref={me.saveRef('split')} className="kuma-uxform-split"/>);
 
+        const Calendar1 = <Panel
+          key="calendar1"
+          ref={me.saveRef('calendar1')}
+          onSelect={me.handleCascadeChange.bind(me, 0)}
+          disabledDate={(current) => {
+            if (!current) {
+              return false;
+            }
+            const now = me.processTime(current.getTime());
+            return (now < from || now > to);
+          }}
+          {...others1}
+        />;
+
+        const Calendar2 = <Panel
+          key="calendar2"
+          ref={me.saveRef('calendar2')}
+          onSelect={me.handleCascadeChange.bind(me, 1)}
+          disabledDate={(current) => {
+            if (!current) {
+              return false;
+            }
+            const now = me.processTime(current.getTime());
+            let first = formatValue ? formatValue[0] : 0;
+            first = me.processTime(first);
+            return (now < from || now > to || now < first);
+          }}
+          {...others2}
+        />;
         arr.push(
-          <Panel
-            key="calendar2"
-            ref={me.saveRef('calendar2')}
-            onSelect={me.handleCascadeChange.bind(me, 1)}
-            disabledDate={(current) => {
-              if (!current) {
-                return false;
-              }
-              const now = me.processTime(current.getTime());
-              let first = formatValue ? formatValue[0] : 0;
-              first = me.processTime(first);
-              return (now < from || now > to || now < first);
-            }}
-            {...others2}
-          />,
+          me.props.dateRanges.length ? createSelector(
+            Calendar1,
+            me.props.dateRanges,
+            me.handleCascadeSelect.bind(me),
+            'tip1'
+          ) : Calendar1
+        );
+        arr.push(
+          <span
+            style={{ width: '8px', borderBottom: '1px solid rgba(31,56,88,0.20)' }}
+            key="split"
+            ref={me.saveRef('split')}
+            className="kuma-uxform-split"
+          />
+        );
+        arr.push(
+          me.props.dateRanges.length ? createSelector(
+            Calendar2,
+            me.props.dateRanges,
+            me.handleCascadeSelect.bind(me),
+            'tip2'
+          ) : Calendar2
         );
         return (
           <div
             className="kuma-date-uxform-field-cascade"
-            ref={(c) => { this.cascadeBox = c; }}
+            ref={(c) => {
+              this.cascadeBox = c;
+            }}
           >
             {arr}
           </div>
@@ -386,10 +415,12 @@ class DateFormField extends FormField {
 
 DateFormField.displayName = 'DateFormField';
 DateFormField.propTypes = assign(FormField.propTypes, {
+  locale: PropTypes.string,
   jsxtype: PropTypes.string,
   panel: PropTypes.string,
   useFormat: PropTypes.bool,
   autoMatchWidth: PropTypes.bool,
+  dateRanges: PropTypes.array
 });
 DateFormField.defaultProps = assign(FormField.defaultProps, {
   locale: 'zh-cn',
@@ -398,5 +429,6 @@ DateFormField.defaultProps = assign(FormField.defaultProps, {
   autoMatchWidth: false,
   panel: 'day',
   useFormat: false,
+  dateRanges: []
 });
 export default DateFormField;

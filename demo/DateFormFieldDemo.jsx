@@ -56,26 +56,26 @@ class Demo extends React.Component {
             }
           }}
         >
-          <DateFormField
-            showTime={false}
-            size="small"
-            format="yyyy-MM-dd"
-            jsxname="date"
-            jsxlabel="日期"
-            locale="zh-cn"
-            className="testField"
-          />
-          <DateFormField
-            jsxtype="cascade"
-            autoMatchWidth
-            jsxshow={this.state.jsxshow}
-            useFormat
-            format="yyyy-MM-dd"
-            jsxfrom="2016-11-24"
-            jsxname="format"
-            jsxlabel="useFormat"
-            locale="zh-cn"
-          />
+          {/*<DateFormField*/}
+            {/*showTime={false}*/}
+            {/*size="small"*/}
+            {/*format="yyyy-MM-dd"*/}
+            {/*jsxname="date"*/}
+            {/*jsxlabel="日期"*/}
+            {/*locale="zh-cn"*/}
+            {/*className="testField"*/}
+          {/*/>*/}
+          {/*<DateFormField*/}
+            {/*jsxtype="cascade"*/}
+            {/*autoMatchWidth*/}
+            {/*jsxshow={this.state.jsxshow}*/}
+            {/*useFormat*/}
+            {/*format="yyyy-MM-dd"*/}
+            {/*jsxfrom="2016-11-24"*/}
+            {/*jsxname="format"*/}
+            {/*jsxlabel="useFormat"*/}
+            {/*locale="zh-cn"*/}
+          {/*/>*/}
           <DateFormField
             jsxtype="cascade"
             jsxname="casMetaDate"
@@ -83,17 +83,33 @@ class Demo extends React.Component {
             useFormat
             format="yyyy-MM-dd"
             jsxlabel="元数据格式"
-            useStartEnd={true}
+            useStartEnd={false}
+            dateRanges={[
+              {
+                text: '本周',
+                value: {
+                  start: '2018-11-12',
+                  end: '2018-11-19'
+                }
+              },
+              {
+                text: '本月',
+                value: {
+                  start: '2018-11-01',
+                  end: '2018-11-30'
+                }
+              }
+            ]}
             locale="zh-cn"
           />
-          <DateFormField
-            jsxtype="cascade"
-            jsxname="casDate"
-            jsxlabel="级联日期"
-            panel="year"
-            showTime
-            showDateInput
-          />
+          {/*<DateFormField*/}
+            {/*jsxtype="cascade"*/}
+            {/*jsxname="casDate"*/}
+            {/*jsxlabel="级联日期"*/}
+            {/*panel="year"*/}
+            {/*showTime*/}
+            {/*showDateInput*/}
+          {/*/>*/}
         </Form>
         <Button onClick={me.handleModeChange.bind(me)}>
           切换模式
