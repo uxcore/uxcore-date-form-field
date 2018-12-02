@@ -168,9 +168,15 @@ class DateFormField extends FormField {
       }
     }
     me.handleDataChange(this.reverseFormatValue(values));
-    // const { toolTip1 } = this.refs;
-    // const toolTip = toolTip1.getPopupDomNode();
-    // toolTip.classList.add('kuma-tooltip-hidden');
+    me.hideToolTip()
+  }
+
+  hideToolTip() {
+    if (this.props.quickSelectRanges.length) {
+      const { toolTip } = this.refs;
+      const toolTipNode = toolTip.getPopupDomNode();
+      toolTipNode.classList.add('kuma-tooltip-hidden');
+    }
   }
 
   handleCascadeSelect = (start, end) => {
@@ -350,22 +356,7 @@ class DateFormField extends FormField {
           }}
           {...others2}
         />;
-        arr.push(
-          quickSelectRanges.length
-            ? <Tooltip overlayStyle={{marginTop: '20px'}} overlayClassName={'date-quick-range'} ref={'toolTip1'} key={'tip1'} mouseEnterDelay={0.3} trigger={['hover', 'click']} overlay={() => {
-              return (
-                <DateRangeSelector
-                  dateRanges={ quickSelectRanges }
-                  onSelect={ me.handleCascadeSelect }
-                />
-              )
-            }} placement="bottomLeft">
-              <HoverOmit>
-                {Calendar1}
-              </HoverOmit>
-            </Tooltip>
-            : Calendar1
-        );
+        arr.push(Calendar1);
         arr.push(
           <span
             style={{ width: '8px', borderBottom: '1px solid rgba(31,56,88,0.20)' }}
@@ -374,22 +365,7 @@ class DateFormField extends FormField {
             className="kuma-uxform-split"
           />
         );
-        arr.push(
-          quickSelectRanges.length
-              ? <Tooltip ref={'toolTip2'} key={'tip2'} mouseEnterDelay={0.3} trigger={['hover', 'click']} overlay={() => {
-                  return (
-                    <DateRangeSelector
-                      dateRanges={ quickSelectRanges }
-                      onSelect={ me.handleCascadeSelect }
-                    />
-                  )
-                }} placement="bottom">
-                  <HoverOmit>
-                    {Calendar2}
-                  </HoverOmit>
-                </Tooltip>
-              : Calendar2
-        );
+        arr.push(Calendar2);
         return (
           <div
             className="kuma-date-uxform-field-cascade"
@@ -397,7 +373,24 @@ class DateFormField extends FormField {
               this.cascadeBox = c;
             }}
           >
-            {arr}
+            { quickSelectRanges.length ? <Tooltip
+              ref={'toolTip'}
+              overlayClassName={'date-quick-range'}
+              mouseEnterDelay={0.3}
+              overlay={() => {
+                return (
+                  <DateRangeSelector
+                    dateRanges={quickSelectRanges}
+                    onSelect={me.handleCascadeSelect}
+                  />
+                )
+              }}
+              placement="bottomLeft"
+            >
+              <HoverOmit>
+                {arr}
+              </HoverOmit>
+            </Tooltip> : arr }
           </div>
         );
       }

@@ -56,15 +56,15 @@ class Demo extends React.Component {
             }
           }}
         >
-          {/*<DateFormField*/}
-            {/*showTime={false}*/}
-            {/*size="small"*/}
-            {/*format="yyyy-MM-dd"*/}
-            {/*jsxname="date"*/}
-            {/*jsxlabel="日期"*/}
-            {/*locale="zh-cn"*/}
-            {/*className="testField"*/}
-          {/*/>*/}
+          <DateFormField
+            showTime={false}
+            size="small"
+            format="yyyy-MM-dd"
+            jsxname="date"
+            jsxlabel="日期"
+            locale="zh-cn"
+            className="testField"
+          />
           {/*<DateFormField*/}
             {/*jsxtype="cascade"*/}
             {/*autoMatchWidth*/}
@@ -76,6 +76,7 @@ class Demo extends React.Component {
             {/*jsxlabel="useFormat"*/}
             {/*locale="zh-cn"*/}
           {/*/>*/}
+
           <DateFormField
             jsxtype="cascade"
             jsxname="casMetaDate"
@@ -84,6 +85,14 @@ class Demo extends React.Component {
             format="yyyy-MM-dd"
             jsxlabel="元数据格式"
             useStartEnd={true}
+            locale="zh-cn"
+          />
+
+          <DateFormField
+            jsxtype="cascade"
+            jsxname="casDate"
+            jsxmod={this.state.mode}
+            jsxlabel="快捷选择"
             quickSelectRanges={[
               {
                 text: '本周',
@@ -97,6 +106,55 @@ class Demo extends React.Component {
                 value: {
                   start: '2018-11-01',
                   end: '2018-11-30'
+                }
+              },
+              {
+                text: '本周1',
+                value: {
+                  start: '2018-11-12',
+                  end: '2018-11-19'
+                }
+              },
+              {
+                text: '本月1',
+                value: {
+                  start: '2018-11-01',
+                  end: '2018-11-30'
+                }
+              },
+              {
+                text: '本周2',
+                value: {
+                  start: '2018-11-12',
+                  end: '2018-11-19'
+                }
+              },
+              {
+                text: '本月3',
+                value: {
+                  start: '2018-11-01',
+                  end: '2018-11-30'
+                }
+              },
+              {
+                text: '本周4',
+                value: {
+                  start: '2018-11-12',
+                  end: '2018-11-19'
+                }
+              },
+              {
+                text: '本月5',
+                value: {
+                  start: '2018-11-01',
+                  end: '2018-11-30'
+                }
+              },
+              {
+                text: '2018-S2',
+                value: {
+                  start: '2018-10-01',
+                  end: '2019-03-31'
                 }
               }
             ]}
