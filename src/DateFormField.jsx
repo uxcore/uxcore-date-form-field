@@ -16,7 +16,7 @@ import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
 import Formatter from 'uxcore-formatter';
 import DateRangeSelector from "./DateRangeSelector";
-import HoverOmit from "./HoverOmit";
+import HoverObserver  from 'react-hover-observer'
 import Tooltip from 'uxcore-tooltip'
 
 const CalendarPanel = {
@@ -374,8 +374,9 @@ class DateFormField extends FormField {
             }}
           >
             { quickSelectRanges.length ? <Tooltip
+              className={'quick-selector-wrapper'}
               ref={'toolTip'}
-              overlayClassName={'date-quick-range'}
+              overlayClassName={'date-quick-range-selector'}
               mouseEnterDelay={0.3}
               overlay={() => {
                 return (
@@ -387,9 +388,9 @@ class DateFormField extends FormField {
               }}
               placement="bottomLeft"
             >
-              <HoverOmit>
+              <HoverObserver>
                 {arr}
-              </HoverOmit>
+              </HoverObserver>
             </Tooltip> : arr }
           </div>
         );

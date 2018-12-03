@@ -54,6 +54,7 @@
     "object.omit": "^3.0.0",
     "prop-types": "15.x",
     "rc-util": "^4.0.2",
+    "react-hover-observer": "^2.1.1",
     "uxcore-calendar": "^0.10.0",
     "uxcore-const": "^1.0.0",
     "uxcore-form-field": "^0.3.0",
