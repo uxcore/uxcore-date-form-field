@@ -65,17 +65,18 @@ class Demo extends React.Component {
             locale="zh-cn"
             className="testField"
           />
-          <DateFormField
-            jsxtype="cascade"
-            autoMatchWidth
-            jsxshow={this.state.jsxshow}
-            useFormat
-            format="yyyy-MM-dd"
-            jsxfrom="2016-11-24"
-            jsxname="format"
-            jsxlabel="useFormat"
-            locale="zh-cn"
-          />
+          {/*<DateFormField*/}
+            {/*jsxtype="cascade"*/}
+            {/*autoMatchWidth*/}
+            {/*jsxshow={this.state.jsxshow}*/}
+            {/*useFormat*/}
+            {/*format="yyyy-MM-dd"*/}
+            {/*jsxfrom="2016-11-24"*/}
+            {/*jsxname="format"*/}
+            {/*jsxlabel="useFormat"*/}
+            {/*locale="zh-cn"*/}
+          {/*/>*/}
+
           <DateFormField
             jsxtype="cascade"
             jsxname="casMetaDate"
@@ -86,14 +87,87 @@ class Demo extends React.Component {
             useStartEnd={true}
             locale="zh-cn"
           />
+
           <DateFormField
             jsxtype="cascade"
             jsxname="casDate"
-            jsxlabel="级联日期"
-            panel="year"
-            showTime
-            showDateInput
+            jsxmod={this.state.mode}
+            jsxlabel="快捷选择"
+            quickSelectRanges={[
+              {
+                text: '本周',
+                value: {
+                  start: '2018-11-12',
+                  end: '2018-11-19'
+                }
+              },
+              {
+                text: '本月',
+                value: {
+                  start: '2018-11-01',
+                  end: '2018-11-30'
+                }
+              },
+              {
+                text: '本周1',
+                value: {
+                  start: '2018-11-12',
+                  end: '2018-11-19'
+                }
+              },
+              {
+                text: '本月1',
+                value: {
+                  start: '2018-11-01',
+                  end: '2018-11-30'
+                }
+              },
+              {
+                text: '本周2',
+                value: {
+                  start: '2018-11-12',
+                  end: '2018-11-19'
+                }
+              },
+              {
+                text: '本月3',
+                value: {
+                  start: '2018-11-01',
+                  end: '2018-11-30'
+                }
+              },
+              {
+                text: '本周4',
+                value: {
+                  start: '2018-11-12',
+                  end: '2018-11-19'
+                }
+              },
+              {
+                text: '本月5',
+                value: {
+                  start: '2018-11-01',
+                  end: '2018-11-30'
+                }
+              },
+              {
+                text: '2018-S2',
+                value: {
+                  start: '2018-10-01',
+                  end: '2019-03-31'
+                }
+              }
+            ]}
+            locale="zh-cn"
           />
+          {/*<DateFormField*/}
+            {/*jsxtype="cascade"*/}
+            {/*jsxname="casDate"*/}
+            {/*jsxlabel="级联日期"*/}
+            {/*panel="year"*/}
+            {/*showTime*/}
+            {/*showDateInput*/}
+          {/*/>*/}
         </Form>
         <Button onClick={me.handleModeChange.bind(me)}>
           切换模式

@@ -136,6 +136,22 @@ describe('DateFormField', () => {
         format: 'yyyy-MM-dd',
         jsxlabel: '元数据格式',
         useStartEnd: true,
+        quickSelectRanges: [
+          {
+            text: '本周',
+            value: {
+              start: '2018-11-12',
+              end: '2018-11-19'
+            }
+          },
+          {
+            text: '本月',
+            value: {
+              start: '2018-11-01',
+              end: '2018-11-30'
+            }
+          },
+        ]
       }, {
         date: {
           start: '2016-01-11',
@@ -143,13 +159,14 @@ describe('DateFormField', () => {
         },
       }), document.getElementById('test-demo'));
       setTimeout(() => {
-        const $inputs = $('.kuma-input');
+
+        const $wrapper = $('.quick-selector-wrapper');
+        const $inputs = $wrapper.find('.kuma-input');
         expect($inputs.length).to.be(2);
         expect($inputs.first().attr('value')).to.be('2016-01-11');
         expect($inputs.last().attr('value')).to.be('2016-02-12');
-        // expect($('.kuma-uxform-field-core span').text())
-        //   .to.contain(':00:00');
         done();
+
       }, 100);
     });
 
