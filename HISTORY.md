@@ -1,4 +1,7 @@
 # history
+## 0.9.4
+* `NEW` add new prop quickSelectRanges
+
 ## 0.9.3
 * `NEW` add metadata support
 
