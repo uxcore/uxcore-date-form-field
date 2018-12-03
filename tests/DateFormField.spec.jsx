@@ -159,12 +159,14 @@ describe('DateFormField', () => {
         },
       }), document.getElementById('test-demo'));
       setTimeout(() => {
+
         const $wrapper = $('.quick-selector-wrapper');
         const $inputs = $wrapper.find('.kuma-input');
         expect($inputs.length).to.be(2);
         expect($inputs.first().attr('value')).to.be('2016-01-11');
         expect($inputs.last().attr('value')).to.be('2016-02-12');
         done();
+
       }, 100);
     });
 
