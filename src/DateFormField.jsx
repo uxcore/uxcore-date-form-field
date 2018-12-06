@@ -168,15 +168,12 @@ class DateFormField extends FormField {
       }
     }
     me.handleDataChange(this.reverseFormatValue(values));
-    me.hideToolTip()
   }
 
   hideToolTip() {
-    if (this.props.quickSelectRanges.length) {
-      const { toolTip } = this.refs;
-      const toolTipNode = toolTip.getPopupDomNode();
-      toolTipNode.classList.add('kuma-tooltip-hidden');
-    }
+    const { toolTip } = this.refs;
+    const toolTipNode = toolTip.getPopupDomNode();
+    toolTipNode.classList.add('kuma-tooltip-hidden');
   }
 
   handleCascadeSelect = (start, end) => {
@@ -331,6 +328,10 @@ class DateFormField extends FormField {
           key="calendar1"
           ref={me.saveRef('calendar1')}
           onSelect={me.handleCascadeChange.bind(me, 0)}
+          onOpenChange={(iShow) => {
+            me.props.onOpenChange && me.props.onOpenChange.call(me, iShow);
+            me.hideToolTip()
+          }}
           disabledDate={(current) => {
             if (!current) {
               return false;
@@ -344,6 +345,10 @@ class DateFormField extends FormField {
         const Calendar2 = <Panel
           key="calendar2"
           ref={me.saveRef('calendar2')}
+          onOpenChange={(iShow) => {
+            me.props.onOpenChange && me.props.onOpenChange.call(me, iShow);
+            me.hideToolTip()
+          }}
           onSelect={me.handleCascadeChange.bind(me, 1)}
           disabledDate={(current) => {
             if (!current) {
@@ -377,7 +382,6 @@ class DateFormField extends FormField {
               className={'quick-selector-wrapper'}
               ref={'toolTip'}
               overlayClassName={'date-quick-range-selector'}
-              mouseEnterDelay={0.3}
               overlay={() => {
                 return (
                   <RangeSelector
