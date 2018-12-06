@@ -15,7 +15,7 @@ import assign from 'object-assign';
 import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
 import Formatter from 'uxcore-formatter';
-import DateRangeSelector from "./DateRangeSelector";
+import RangeSelector from "./RangeSelector";
 import HoverObserver  from 'react-hover-observer'
 import Tooltip from 'uxcore-tooltip'
 
@@ -380,7 +380,7 @@ class DateFormField extends FormField {
               mouseEnterDelay={0.3}
               overlay={() => {
                 return (
-                  <DateRangeSelector
+                  <RangeSelector
                     dateRanges={quickSelectRanges}
                     onSelect={me.handleCascadeSelect}
                   />
