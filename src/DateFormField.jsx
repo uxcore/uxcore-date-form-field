@@ -172,11 +172,11 @@ class DateFormField extends FormField {
 
   hideToolTip() {
     const { toolTip } = this.refs;
-    if (!toolTip) {
+    if (!toolTip || toolTip.getPopupDomNode) {
       return
     }
     const toolTipNode = toolTip.getPopupDomNode();
-    toolTipNode.classList.add('kuma-tooltip-hidden');
+    toolTipNode && toolTipNode.classList.add('kuma-tooltip-hidden');
   }
 
   handleCascadeSelect = (start, end) => {
