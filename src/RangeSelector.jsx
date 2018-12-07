@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from 'uxcore-button'
+import Tag from 'uxcore-tag'
 
 class RangeSelector extends React.Component{
   static defaultProps = {
@@ -20,20 +20,20 @@ class RangeSelector extends React.Component{
     const { dateRanges } = this.props;
     return (
       dateRanges.length
-        ? <div>
+        ? <Tag addTags={false}>
           {dateRanges.map(range => {
             const { text, value } = range;
             return (
-              <Button
-                size={'small'}
+              <Tag.Item
+                type={'info'}
                 onClick={() => this.onSelectHandle(value.start, value.end)}
                 key={text}
               >
                 {text}
-              </Button>
+              </Tag.Item>
             )
           })}
-          </div>
+          </Tag>
         : null
     )
   }

@@ -58,7 +58,8 @@
     "uxcore-calendar": "^0.10.0",
     "uxcore-const": "^1.0.0",
     "uxcore-form-field": "^0.3.0",
-    "uxcore-formatter": "^0.1.2"
+    "uxcore-formatter": "^0.1.2",
+    "uxcore-tag": "^2.2.3"
   },
   "contributors": [],
   "license": "MIT"

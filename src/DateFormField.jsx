@@ -172,7 +172,7 @@ class DateFormField extends FormField {
 
   hideToolTip() {
     const { toolTip } = this.refs;
-    if (!toolTip || toolTip.getPopupDomNode) {
+    if (!toolTip || !toolTip.getPopupDomNode) {
       return
     }
     const toolTipNode = toolTip.getPopupDomNode();
