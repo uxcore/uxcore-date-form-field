@@ -183,6 +183,10 @@ class DateFormField extends FormField {
     this.handleCascadeChange(0, new Date(start), start);
     setTimeout(() => {
       this.handleCascadeChange(1, new Date(end), end)
+      const overlay = document.querySelector('.date-quick-range-selector')
+      if (overlay) {
+        overlay.classList.add('kuma-tooltip-hidden')
+      }
     })
   };
 
