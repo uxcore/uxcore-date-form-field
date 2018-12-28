@@ -1,4 +1,7 @@
 # history
+## 0.9.9
+* `CHANGE` when select a quickSelectRanges, close the tooltip
+
 ## 0.9.8
 * `NEW` add new prop quickSelectRanges
 
