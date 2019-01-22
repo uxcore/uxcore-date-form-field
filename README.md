@@ -56,7 +56,7 @@ $ npm run start
 
 ## Props
 
-支持 FormField 公共的 Props 职位还支持以下 Props：
+支持 FormField 公共的 Props 之外还支持以下 Props：
 
 | 配置项 | 类型 | 必填 | 默认值 | 功能/备注 |
 |---|---|---|---|---|
@@ -67,11 +67,11 @@ $ npm run start
 |autoMatchWidth|boolean|optional|false|从 1.8.11 版本支持，在级联状态下输入框自动匹配宽度|
 |requireType|string|optional|-|必填校验方式，有4个可选值，见 [requireType](#requireType) 说明|
 
-除此之外，支持除 onSelect，[uxcore-calendar](https://www.npmjs.com/package/uxcore-calendar) 的所有 props。
+除此之外，支持除 onSelect，[uxcore-calendar](https://www.npmjs.com/package/uxcore-calendar) 的所有 Props。
 
 ### requireType
 
-用于定义在级联模式下的必填校验规则，默认不传的情况的建议逻辑是 any，即任意填写一项即可。
+用于定义在级联模式下的必填校验规则，默认不传的情况的校验逻辑是 any，即任意填写一项即可。
 
 - start 区间开始时间必填
 - end 区间结束时间必填
