@@ -12,15 +12,47 @@ uxcore-date-form-field ui component for react
 $ git clone https://github.com/uxcore/uxcore-date-form-field
 $ cd uxcore-date-form-field
 $ npm install
-$ gulp server
+$ npm run start
 ```
 
 ## Usage
 
-请参阅 Form 文档。
+```
+<Form
+    jsxmode={this.state.mode}
+    ref={(c) => { this.form = c; }}
+    jsxvalues={{
+        testDate: '',
+        casDate: ['2016-01-02', '2016-02-03'],
+    }}
+>
+    <DateFormField
+        showTime={false}
+        format="yyyy-MM-dd"
+        jsxname="date"
+        jsxlabel="日期"
+        locale="zh-cn"
+        className="testDate"
+    />
+    <DateFormField
+        jsxtype="cascade"
+        autoMatchWidth
+        useFormat
+        format="yyyy-MM-dd"
+        jsxfrom="2016-11-24"
+        jsxname="format"
+        jsxlabel="日期区间"
+        locale="zh-cn"
+        required
+        requireType="end"
+        jsxrules={[
+            { validator: Validators.isNotEmpty, errMsg: '不能为空' },
+        ]}
+    />
+</Form>
+```
 
-## demo
-http://uxcore.github.io/
+更多请参阅 Form 文档。
 
 ## Props
 
