@@ -10,6 +10,8 @@ import DateFormField from '../src';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+const { Validators } = Form;
+
 const createDateField = (options = {}, values = {}) => {
   const opts = {
     jsxname: 'test-name',
@@ -67,7 +69,6 @@ describe('DateFormField', () => {
       const w = mount(createDateField({ jsxtype: 'cascade', autoMatchWidth: true }));
       const d = w.find(DateFormField);
       expect(d.prop('autoMatchWidth')).to.be(true);
-      expect(d.instance().resizeListenner.remove).to.be.a('function');
     });
 
     it('render showtime date form field', (done) => {
@@ -170,14 +171,134 @@ describe('DateFormField', () => {
           attachTo: div2,
         });
       setTimeout(() => {
-        expect(wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth).to.be((800 - 88 - 24 - 26) / 2);
+        expect(wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth).to.be((800 - 88 - 24 - 28) / 2);
         wrapper.find('.test-for-auto-match-width').hostNodes().getDOMNode().style.width = '600px';
         wrapper.find(DateFormField).instance().forceUpdate();
-        expect(wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth).to.be((600 - 88 - 24 - 26) / 2);
+        expect(wrapper.find('input.kuma-input').at(0).getDOMNode().offsetWidth).to.be((600 - 88 - 24 - 28) / 2);
         wrapper.unmount();
         document.body.removeChild(div2);
         done();
       }, 500);
+    });
+
+    it('cascade date form field support to define requireType: start pass', (done) => {
+      const w = mount(createDateField({
+        jsxname: 'valid001',
+        jsxlabel: 'date2333',
+        jsxtype: 'cascade',
+        required: true,
+        requireType: 'start',
+        jsxrules: [
+          { validator: Validators.isNotEmpty, errMsg: '不能为空' },
+        ],
+      }, {
+        valid001: ['2019-01-20'],
+      }));
+      expect(w.find(DateFormField).prop('requireType')).to.be('start');
+      w.find(DateFormField).instance().doValidate();
+      w.update();
+      expect(w.find('.has-error').length).to.be(0);
+      done();
+    });
+
+    it('cascade date form field support to define requireType: start error', (done) => {
+      const w = mount(createDateField({
+        jsxname: 'valid001',
+        jsxlabel: 'date2333',
+        jsxtype: 'cascade',
+        required: true,
+        requireType: 'start',
+        jsxrules: [
+          { validator: Validators.isNotEmpty, errMsg: '不能为空' },
+        ],
+      }, {
+        valid001: [undefined, '2019-01-20'],
+      }));
+      expect(w.find(DateFormField).prop('requireType')).to.be('start');
+      w.find(DateFormField).instance().doValidate();
+      w.update();
+      expect(w.find('li.kuma-uxform-errormsg').length).to.be(1);
+      done();
+    });
+
+    it('cascade date form field support to define requireType: both pass', (done) => {
+      const w = mount(createDateField({
+        jsxname: 'valid001',
+        jsxlabel: 'date2333',
+        jsxtype: 'cascade',
+        required: true,
+        requireType: 'both',
+        jsxrules: [
+          { validator: Validators.isNotEmpty, errMsg: '不能为空' },
+        ],
+      }, {
+        valid001: ['2019-01-18', '2019-01-20'],
+      }));
+      expect(w.find(DateFormField).prop('requireType')).to.be('both');
+      w.find(DateFormField).instance().doValidate();
+      w.update();
+      expect(w.find('li.kuma-uxform-errormsg').length).to.be(0);
+      done();
+    });
+
+    it('cascade date form field support to define requireType: any pass', (done) => {
+      const w = mount(createDateField({
+        jsxname: 'valid001',
+        jsxlabel: 'date2333',
+        jsxtype: 'cascade',
+        required: true,
+        requireType: 'any',
+        jsxrules: [
+          { validator: Validators.isNotEmpty, errMsg: '不能为空' },
+        ],
+      }, {
+        valid001: [undefined, '2019-01-20'],
+      }));
+      expect(w.find(DateFormField).prop('requireType')).to.be('any');
+      w.find(DateFormField).instance().doValidate();
+      w.update();
+      expect(w.find('li.kuma-uxform-errormsg').length).to.be(0);
+      done();
+    });
+
+    it('cascade date form field support to define requireType: end error', (done) => {
+      const w = mount(createDateField({
+        jsxname: 'valid001',
+        jsxlabel: 'date2333',
+        jsxtype: 'cascade',
+        required: true,
+        requireType: 'end',
+        jsxrules: [
+          { validator: Validators.isNotEmpty, errMsg: '不能为空' },
+        ],
+      }, {
+        valid001: ['2019-01-19', undefined],
+      }));
+      expect(w.find(DateFormField).prop('requireType')).to.be('end');
+      w.find(DateFormField).instance().doValidate();
+      w.update();
+      expect(w.find('li.kuma-uxform-errormsg').length).to.be(1);
+      done();
+    });
+
+    it('cascade date form field support to define requireType: value is not an array', (done) => {
+      const w = mount(createDateField({
+        jsxname: 'valid001',
+        jsxlabel: 'date2333',
+        jsxtype: 'cascade',
+        required: true,
+        requireType: 'start',
+        jsxrules: [
+          { validator: Validators.isNotEmpty, errMsg: '不能为空' },
+        ],
+      }, {
+        valid001: '2019-01-19',
+      }));
+      expect(w.find(DateFormField).prop('requireType')).to.be('start');
+      w.find(DateFormField).instance().doValidate();
+      w.update();
+      expect(w.find('li.kuma-uxform-errormsg').length).to.be(1);
+      done();
     });
   });
 
