@@ -13,6 +13,7 @@ import Const from 'uxcore-const';
 import React from 'react';
 import DateFormField from '../src';
 
+const { Validators } = Form;
 
 class Demo extends React.Component {
 
@@ -65,6 +66,11 @@ class Demo extends React.Component {
             jsxname="format"
             jsxlabel="useFormat"
             locale="zh-cn"
+            required
+            requireType="end"
+            jsxrules={[
+              { validator: Validators.isNotEmpty, errMsg: '不能为空' },
+            ]}
           />
           <DateFormField
             jsxtype="cascade"

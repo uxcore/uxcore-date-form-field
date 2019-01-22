@@ -1,5 +1,8 @@
 # history
 
+## 0.8.16
+
+* `FEAT` add new prop requireType to decide how the required validator to do validate under cascade mode
 
 ## 0.8.13
 

@@ -11,12 +11,12 @@ import PropTypes from 'prop-types';
 import FormField from 'uxcore-form-field';
 import Constants from 'uxcore-const';
 import Calendar from 'uxcore-calendar';
+import Validators from 'uxcore-validator';
 import assign from 'object-assign';
 import deepcopy from 'lodash/cloneDeep';
 import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
 import Formatter from 'uxcore-formatter';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
 
 const CalendarPanel = {
   month: Calendar.MonthCalendar,
@@ -25,35 +25,6 @@ const CalendarPanel = {
 };
 
 const getMode = props => props.jsxmode || props.mode;
-const getVerticalAlign = (props) => {
-  // jsxVerticalAlign is an internal varible.
-  let align = props.verticalAlign;
-  if (align === undefined) {
-    align = props.jsxVerticalAlign;
-  }
-  return align;
-};
-
-const getMaxWidth = props => props.inputBoxMaxWidth;
-
-const getIEVer = () => {
-  if (window) {
-    const ua = window.navigator.userAgent;
-    const idx = ua.indexOf('MSIE');
-    if (idx > 0) {
-      // "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64;
-      // Trident/6.0; SLCC2; .NET CLR 2.0.50727)"
-      return parseInt(ua.substring(idx + 5, ua.indexOf('.', idx)), 10);
-    }
-    if (ua.match(/Trident\/7\./)) {
-      // "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; SLCC2;
-      // .NET CLR 2.0.50727; rv:11.0) like Gecko"
-      return 11;
-    }
-    return 0;
-  }
-  return 0;
-};
 
 const getPropFromArray = (arr, index) => {
   if (arr instanceof Array) {
@@ -74,6 +45,31 @@ class DateFormField extends FormField {
   constructor(props) {
     super(props);
     this.resize = this.resize.bind(this);
+
+    // cascade field empty validate enhance
+    if (props.jsxrules && props.jsxtype === 'cascade' && props.requireType) {
+      props.jsxrules.forEach((item) => {
+        if (item.validator === Validators.isNotEmpty) {
+          item.validator = (value) => { // eslint-disable-line
+            if (!Array.isArray(value)) {
+              return false;
+            }
+
+            const startOk = Validators.isNotEmpty(value[0]);
+            const endOk = Validators.isNotEmpty(value[1]);
+            if (props.requireType === 'start') {
+              return startOk;
+            } else if (props.requireType === 'end') {
+              return endOk;
+            } else if (props.requireType === 'both') {
+              return startOk && endOk;
+            } else if (props.requireType === 'any') {
+              return startOk || endOk;
+            }
+          };
+        }
+      });
+    }
   }
 
   componentDidMount() {
@@ -360,7 +356,7 @@ class DateFormField extends FormField {
         return (
           <span>
             {getViewText(me.state.value, (me.props.format || defaultFormat))}
-                    </span>
+          </span>
         );
       }
       return (
@@ -381,6 +377,7 @@ DateFormField.propTypes = assign(FormField.propTypes, {
   panel: PropTypes.string,
   useFormat: PropTypes.bool,
   autoMatchWidth: PropTypes.bool,
+  requireType: PropTypes.oneOf(['start', 'end', 'both', 'any']),
 });
 DateFormField.defaultProps = assign(FormField.defaultProps, {
   locale: 'zh-cn',
@@ -389,5 +386,6 @@ DateFormField.defaultProps = assign(FormField.defaultProps, {
   autoMatchWidth: false,
   panel: 'day',
   useFormat: false,
+  requireType: undefined,
 });
 export default DateFormField;

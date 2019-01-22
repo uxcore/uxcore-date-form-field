@@ -46,7 +46,7 @@
     "uxcore-button": "*",
     "uxcore-form": "*",
     "uxcore-kuma": "*",
-    "uxcore-tools": "0.2.x"
+    "uxcore-tools": "0.3.x"
   },
   "dependencies": {
     "classnames": "^2.1.2",
@@ -57,7 +57,8 @@
     "uxcore-calendar": "~0.9.0",
     "uxcore-const": "^1.0.0",
     "uxcore-form-field": "~0.2.2",
-    "uxcore-formatter": "~0.1.2"
+    "uxcore-formatter": "~0.1.2",
+    "uxcore-validator": "^0.2.6"
   },
   "contributors": [],
   "license": "MIT"
