@@ -253,6 +253,7 @@ class DateFormField extends FormField {
       jsxto,
       disabledDate,
       panel,
+      defaultValue,
       ...others
     } = me.props;
 
@@ -274,6 +275,7 @@ class DateFormField extends FormField {
           <Panel
             value={me.state.value}
             onSelect={me.handleChange.bind(me)}
+            defaultValue={defaultValue}
             disabledDate={disabledDate || ((current) => {
               // if showTime is true or timePicker is set, we use time to compare
               // otherwise we use day to compare
@@ -298,6 +300,7 @@ class DateFormField extends FormField {
           placeholder: getPropFromArray(others.placeholder, 0),
           format: getPropFromArray(others.format, 0),
           disabledDate: getPropFromArray(disabledDate, 0),
+          defaultValue: getPropFromArray(defaultValue, 0)
         };
 
         const propsFromArray2 = {
@@ -305,6 +308,7 @@ class DateFormField extends FormField {
           placeholder: getPropFromArray(others.placeholder, 1),
           format: getPropFromArray(others.format, 1),
           disabledDate: getPropFromArray(disabledDate, 1),
+          defaultValue: getPropFromArray(defaultValue, 1)
         };
 
         const formatValue = me.formatValue(me.state.value);
@@ -316,6 +320,7 @@ class DateFormField extends FormField {
         } else {
           others1 = assign({}, others, {
             value: null,
+            defaultValue: propsFromArray1.defaultValue || undefined
           }, omitBy(propsFromArray1, isNil));
         }
         if (formatValue && formatValue[1]) {
@@ -325,6 +330,7 @@ class DateFormField extends FormField {
         } else {
           others2 = assign({}, others, {
             value: null,
+            defaultValue: propsFromArray2.defaultValue || undefined
           }, omitBy(propsFromArray2, isNil));
         }
 

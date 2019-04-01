@@ -90,6 +90,17 @@ class Demo extends React.Component {
 
           <DateFormField
             jsxtype="cascade"
+            // jsxname="casMetaDate"
+            jsxmod={this.state.mode}
+            useFormat
+            format="yyyy-MM-dd"
+            jsxlabel="defaultValue"
+            locale="zh-cn"
+            defaultValue={[1557546173672, 1558755936885]}
+          />
+
+          <DateFormField
+            jsxtype="cascade"
             jsxname="casDate"
             jsxmod={this.state.mode}
             jsxlabel="快捷选择"
