@@ -1,4 +1,7 @@
 # history
+## 0.9.11
+* `FIXED` add defaultValue support in cascade mode
+
 ## 0.9.10
 * `CHANGE` when select a quickSelectRanges, close the tooltip
 
@@ -24,7 +27,7 @@
 
 ## 0.8.13
 
-* `CHANGED` spliter style change 
+* `CHANGED` spliter style change
 
 ## 0.8.11
 
@@ -40,7 +43,7 @@
 
 ## 0.8.8
 
-* `FIXED` autoSize logic go wrong if cascade wrapper's width is not equal to fieldCore's width 
+* `FIXED` autoSize logic go wrong if cascade wrapper's width is not equal to fieldCore's width
 * `CHANGED` `inputBoxMaxWidth`, `mode` & `verticalAlign` change will call the resize
 
 ## 0.8.7
@@ -135,11 +138,11 @@
 
 ## 0.3.1
 
-`NEW` support new prop `useFormat`, DateFormField will use formatted value to communicate. 
+`NEW` support new prop `useFormat`, DateFormField will use formatted value to communicate.
 
 ## 0.3.0
 
-`CHANGED` update dependency `uxcore-calendar` to ~0.5.0 
+`CHANGED` update dependency `uxcore-calendar` to ~0.5.0
 
 ## 0.2.3
 
