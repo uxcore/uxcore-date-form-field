@@ -1,4 +1,7 @@
 # history
+## 0.9.12
+* `FIXED` add new prop fixTimezoneOffset for view mode
+
 ## 0.9.11
 * `FIXED` add defaultValue support in cascade mode
 

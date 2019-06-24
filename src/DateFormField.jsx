@@ -455,7 +455,8 @@ DateFormField.propTypes = assign(FormField.propTypes, {
   panel: PropTypes.string,
   useFormat: PropTypes.bool,
   autoMatchWidth: PropTypes.bool,
-  quickSelectRanges: PropTypes.array
+  quickSelectRanges: PropTypes.array,
+  fixTimezoneOffset: PropTypes.bool
 });
 DateFormField.defaultProps = assign(FormField.defaultProps, {
   locale: 'zh-cn',
@@ -464,6 +465,7 @@ DateFormField.defaultProps = assign(FormField.defaultProps, {
   autoMatchWidth: false,
   panel: 'day',
   useFormat: false,
-  quickSelectRanges: []
+  quickSelectRanges: [],
+  fixTimezoneOffset: false
 });
 export default DateFormField;
