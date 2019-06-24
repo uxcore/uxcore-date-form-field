@@ -48,7 +48,7 @@ class Demo extends React.Component {
             return false;
           }}
           jsxvalues={{
-            date: '2018-01-12',
+            date: '2019-06-24',
             casDate: ['2016-01-02', '2017-02-03'],
             casMetaDate: {
               start: '2016-01-11',
@@ -57,6 +57,7 @@ class Demo extends React.Component {
           }}
         >
           <DateFormField
+            fixTimezoneOffset
             showTime={false}
             size="small"
             format="yyyy-MM-dd"
@@ -80,6 +81,7 @@ class Demo extends React.Component {
           <DateFormField
             jsxtype="cascade"
             jsxname="casMetaDate"
+            fixTimezoneOffset
             jsxmod={this.state.mode}
             useFormat
             format="yyyy-MM-dd"

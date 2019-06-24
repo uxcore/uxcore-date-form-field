@@ -34,19 +34,24 @@ const getPropFromArray = (arr, index) => {
   return arr;
 };
 
-const getViewText = (value, format) => {
-  const date = new Date(value);
-  if (isNaN(date) || value === null) {
-    return value;
-  }
-  return Formatter.date(value, format);
-};
+
 
 class DateFormField extends FormField {
   constructor(props) {
     super(props);
     this.resize = this.resize.bind(this);
   }
+
+  getViewText(value, format){
+    const date = new Date(value);
+    if (isNaN(date) || value === null) {
+      return value;
+    }
+    const localTime = date.getTime();
+    const localOffset = date.getTimezoneOffset() * 60 * 1000;
+    value = this.props.fixTimezoneOffset ? localTime + localOffset : value;
+    return Formatter.date(value, format);
+  };
 
   componentDidMount() {
     super.componentDidMount();
@@ -423,7 +428,7 @@ class DateFormField extends FormField {
       if (jsxtype === 'single') {
         return (
           <span>
-            {getViewText(me.state.value, (me.props.format || defaultFormat))}
+            {this.getViewText(me.state.value, (me.props.format || defaultFormat))}
           </span>
         );
       }
@@ -433,7 +438,7 @@ class DateFormField extends FormField {
         <span>
           {
             formatValue instanceof Array
-              ? formatValue.map(item => getViewText(item, (me.props.format || defaultFormat))).join(' - ')
+              ? formatValue.map(item => this.getViewText(item, (me.props.format || defaultFormat))).join(' - ')
               : formatValue
           }
         </span>
