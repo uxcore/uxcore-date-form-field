@@ -386,7 +386,7 @@ class DateFormField extends FormField {
             const now = me.processTime(current.getTime());
             let first = formatValue ? formatValue[0] : 0;
             //如果显示时间，需要将时间点前移到当前日期的0点
-            if (me.props.showTime) {
+            if (me.props.showTime && first) {
               first = first.replace(/\d{1,2}:\d{1,2}:\d{1,2}/, '00:00:00')
             }
             first = me.processTime(first);
