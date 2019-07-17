@@ -59,6 +59,7 @@
     "uxcore-const": "^1.0.0",
     "uxcore-form-field": "^0.3.0",
     "uxcore-formatter": "^0.1.2",
+    "uxcore-message": "^0.5.15",
     "uxcore-tag": "^2.2.3",
     "uxcore-tooltip": "^0.4.12"
   },

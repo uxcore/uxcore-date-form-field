@@ -18,6 +18,7 @@ import Formatter from 'uxcore-formatter';
 import RangeSelector from "./RangeSelector";
 import HoverObserver  from 'react-hover-observer'
 import Tooltip from 'uxcore-tooltip'
+import Message from 'uxcore-message'
 
 const CalendarPanel = {
   month: Calendar.MonthCalendar,
@@ -168,8 +169,21 @@ class DateFormField extends FormField {
       }
       if (i === 1
         && !!values[0]
-        && me.processTime(value) < me.processTime(values[0])) {
+        && !me.props.showTime && me.processTime(value) < me.processTime(values[0])) {
         values[0] = undefined;
+      }
+      if (i === 1 && me.props.showTime) {
+        const first = new Date(me.state.value[0])
+        const second = new Date(value)
+        if (
+          first.getFullYear() === second.getFullYear() &&
+          first.getMonth() === second.getMonth() &&
+          first.getDate() === second.getDate()
+        ) {
+          if (second.getHours() < first.getHours() || second.getHours() === first.getHours() && second.getMinutes() < first.getMinutes()) {
+            Message.error(me.props.locale === 'zh-cn' ? '起始时间晚于结束时间，请确认后重新选择' : 'The start time is later than the end time, please check & choose again!')
+          }
+        }
       }
     }
     me.handleDataChange(this.reverseFormatValue(values));
@@ -371,6 +385,10 @@ class DateFormField extends FormField {
             }
             const now = me.processTime(current.getTime());
             let first = formatValue ? formatValue[0] : 0;
+            //如果显示时间，需要将时间点前移到当前日期的0点
+            if (me.props.showTime) {
+              first = first.replace(/\d{1,2}:\d{1,2}:\d{1,2}/, '00:00:00')
+            }
             first = me.processTime(first);
             return (now < from || now > to || now < first);
           }}
