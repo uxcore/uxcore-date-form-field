@@ -50,6 +50,7 @@ class Demo extends React.Component {
           jsxvalues={{
             date: '2019-06-24',
             casDate: ['2016-01-02', '2017-02-03'],
+            cas1Date: ['2016-07-11 13:04:11', '2016-07-15 14:05:11'],
             casMetaDate: {
               start: '2016-01-11',
               end: '2016-02-12'
@@ -92,13 +93,14 @@ class Demo extends React.Component {
 
           <DateFormField
             jsxtype="cascade"
-            // jsxname="casMetaDate"
+            jsxname="cas1Date"
             jsxmod={this.state.mode}
             useFormat
-            format="yyyy-MM-dd"
+            format="yyyy-MM-dd HH:mm:ss"
+            showTime={true}
             jsxlabel="defaultValue"
             locale="zh-cn"
-            defaultValue={[1557546173672, 1558755936885]}
+            // defaultValue={[1557546173672, 1558755936885]}
           />
 
           <DateFormField
