@@ -1,5 +1,8 @@
 # history
 ## 0.9.12
+* `FIXED` fix a bug in disabledDate when showTime is true
+
+## 0.9.12
 * `FIXED` add new prop fixTimezoneOffset for view mode
 
 ## 0.9.11
